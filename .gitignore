@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# Reproducible / bulky generated artifacts.
+PIR_gpu/model_output/**/aligned_dataset.npz
+PIR_gpu/model_output/**/model.pt
+PIR_gpu/model_output/**/viewer_data.json
+PIR_gpu/model_output/**/test_predictions.csv
+PIR_gpu/model_output/**/predict_trial_005.csv
+PIR_gpu/model_output/**/test_frame_errors.csv
+
+# Keep source code, metrics, reports, and lightweight viewer shell files in git.

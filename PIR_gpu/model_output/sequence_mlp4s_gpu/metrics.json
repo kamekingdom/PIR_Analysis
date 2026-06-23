@@ -1,0 +1,980 @@
+{
+  "dataset": "PIR_gpu/model_output/baseline_ridge_v3/aligned_dataset.npz",
+  "device": "cuda",
+  "train_trials": [
+    "002",
+    "003",
+    "004"
+  ],
+  "test_trials": [
+    "005"
+  ],
+  "samples": {
+    "train_rows": 16210,
+    "validation_rows": 2915,
+    "test_rows": 6663
+  },
+  "validation": {
+    "best_epoch": 53,
+    "best_loss": 0.23091202229261398,
+    "rows": 2915
+  },
+  "model": {
+    "type": "mlp",
+    "context_sec": 4.0,
+    "seq_len": 101,
+    "hidden_dim": 768,
+    "layers": 5,
+    "dropout": 0.15,
+    "lr": 0.001,
+    "weight_decay": 0.0001
+  },
+  "feature_count": 375,
+  "target_count": 57,
+  "target_names": [
+    "abdomen_X [mm]",
+    "abdomen_Y [mm]",
+    "abdomen_Z [mm]",
+    "head_X [mm]",
+    "head_Y [mm]",
+    "head_Z [mm]",
+    "l_foot_X [mm]",
+    "l_foot_Y [mm]",
+    "l_foot_Z [mm]",
+    "l_hand_X [mm]",
+    "l_hand_Y [mm]",
+    "l_hand_Z [mm]",
+    "l_larm_X [mm]",
+    "l_larm_Y [mm]",
+    "l_larm_Z [mm]",
+    "l_shank_X [mm]",
+    "l_shank_Y [mm]",
+    "l_shank_Z [mm]",
+    "l_thigh_X [mm]",
+    "l_thigh_Y [mm]",
+    "l_thigh_Z [mm]",
+    "l_toes_X [mm]",
+    "l_toes_Y [mm]",
+    "l_toes_Z [mm]",
+    "l_uarm_X [mm]",
+    "l_uarm_Y [mm]",
+    "l_uarm_Z [mm]",
+    "neck_X [mm]",
+    "neck_Y [mm]",
+    "neck_Z [mm]",
+    "pelvis_X [mm]",
+    "pelvis_Y [mm]",
+    "pelvis_Z [mm]",
+    "r_foot_X [mm]",
+    "r_foot_Y [mm]",
+    "r_foot_Z [mm]",
+    "r_hand_X [mm]",
+    "r_hand_Y [mm]",
+    "r_hand_Z [mm]",
+    "r_larm_X [mm]",
+    "r_larm_Y [mm]",
+    "r_larm_Z [mm]",
+    "r_shank_X [mm]",
+    "r_shank_Y [mm]",
+    "r_shank_Z [mm]",
+    "r_thigh_X [mm]",
+    "r_thigh_Y [mm]",
+    "r_thigh_Z [mm]",
+    "r_toes_X [mm]",
+    "r_toes_Y [mm]",
+    "r_toes_Z [mm]",
+    "r_uarm_X [mm]",
+    "r_uarm_Y [mm]",
+    "r_uarm_Z [mm]",
+    "thorax_X [mm]",
+    "thorax_Y [mm]",
+    "thorax_Z [mm]"
+  ],
+  "feature_names": [
+    "192.168.11.2:PIR sensor 00 (center) [V]:lag_0.00s",
+    "192.168.11.2:PIR sensor 01 (tv) [V]:lag_0.00s",
+    "192.168.11.2:PIR sensor 02 (kitchen) [V]:lag_0.00s",
+    "192.168.11.2:PIR sensor 03 (closet) [V]:lag_0.00s",
+    "192.168.11.2:PIR sensor 04 (sofa) [V]:lag_0.00s",
+    "192.168.11.3:PIR sensor 00 (center) [V]:lag_0.00s",
+    "192.168.11.3:PIR sensor 01 (tv) [V]:lag_0.00s",
+    "192.168.11.3:PIR sensor 02 (kitchen) [V]:lag_0.00s",
+    "192.168.11.3:PIR sensor 03 (closet) [V]:lag_0.00s",
+    "192.168.11.3:PIR sensor 04 (sofa) [V]:lag_0.00s",
+    "192.168.11.4:PIR sensor 00 (center) [V]:lag_0.00s",
+    "192.168.11.4:PIR sensor 01 (tv) [V]:lag_0.00s",
+    "192.168.11.4:PIR sensor 02 (kitchen) [V]:lag_0.00s",
+    "192.168.11.4:PIR sensor 03 (closet) [V]:lag_0.00s",
+    "192.168.11.4:PIR sensor 04 (sofa) [V]:lag_0.00s",
+    "192.168.11.5:PIR sensor 00 (center) [V]:lag_0.00s",
+    "192.168.11.5:PIR sensor 01 (tv) [V]:lag_0.00s",
+    "192.168.11.5:PIR sensor 02 (kitchen) [V]:lag_0.00s",
+    "192.168.11.5:PIR sensor 03 (closet) [V]:lag_0.00s",
+    "192.168.11.5:PIR sensor 04 (sofa) [V]:lag_0.00s",
+    "192.168.11.6:PIR sensor 00 (center) [V]:lag_0.00s",
+    "192.168.11.6:PIR sensor 01 (tv) [V]:lag_0.00s",
+    "192.168.11.6:PIR sensor 02 (kitchen) [V]:lag_0.00s",
+    "192.168.11.6:PIR sensor 03 (closet) [V]:lag_0.00s",
+    "192.168.11.6:PIR sensor 04 (sofa) [V]:lag_0.00s",
+    "192.168.11.2:PIR sensor 00 (center) [V]:lag_0.04s",
+    "192.168.11.2:PIR sensor 01 (tv) [V]:lag_0.04s",
+    "192.168.11.2:PIR sensor 02 (kitchen) [V]:lag_0.04s",
+    "192.168.11.2:PIR sensor 03 (closet) [V]:lag_0.04s",
+    "192.168.11.2:PIR sensor 04 (sofa) [V]:lag_0.04s",
+    "192.168.11.3:PIR sensor 00 (center) [V]:lag_0.04s",
+    "192.168.11.3:PIR sensor 01 (tv) [V]:lag_0.04s",
+    "192.168.11.3:PIR sensor 02 (kitchen) [V]:lag_0.04s",
+    "192.168.11.3:PIR sensor 03 (closet) [V]:lag_0.04s",
+    "192.168.11.3:PIR sensor 04 (sofa) [V]:lag_0.04s",
+    "192.168.11.4:PIR sensor 00 (center) [V]:lag_0.04s",
+    "192.168.11.4:PIR sensor 01 (tv) [V]:lag_0.04s",
+    "192.168.11.4:PIR sensor 02 (kitchen) [V]:lag_0.04s",
+    "192.168.11.4:PIR sensor 03 (closet) [V]:lag_0.04s",
+    "192.168.11.4:PIR sensor 04 (sofa) [V]:lag_0.04s",
+    "192.168.11.5:PIR sensor 00 (center) [V]:lag_0.04s",
+    "192.168.11.5:PIR sensor 01 (tv) [V]:lag_0.04s",
+    "192.168.11.5:PIR sensor 02 (kitchen) [V]:lag_0.04s",
+    "192.168.11.5:PIR sensor 03 (closet) [V]:lag_0.04s",
+    "192.168.11.5:PIR sensor 04 (sofa) [V]:lag_0.04s",
+    "192.168.11.6:PIR sensor 00 (center) [V]:lag_0.04s",
+    "192.168.11.6:PIR sensor 01 (tv) [V]:lag_0.04s",
+    "192.168.11.6:PIR sensor 02 (kitchen) [V]:lag_0.04s",
+    "192.168.11.6:PIR sensor 03 (closet) [V]:lag_0.04s",
+    "192.168.11.6:PIR sensor 04 (sofa) [V]:lag_0.04s",
+    "192.168.11.2:PIR sensor 00 (center) [V]:lag_0.08s",
+    "192.168.11.2:PIR sensor 01 (tv) [V]:lag_0.08s",
+    "192.168.11.2:PIR sensor 02 (kitchen) [V]:lag_0.08s",
+    "192.168.11.2:PIR sensor 03 (closet) [V]:lag_0.08s",
+    "192.168.11.2:PIR sensor 04 (sofa) [V]:lag_0.08s",
+    "192.168.11.3:PIR sensor 00 (center) [V]:lag_0.08s",
+    "192.168.11.3:PIR sensor 01 (tv) [V]:lag_0.08s",
+    "192.168.11.3:PIR sensor 02 (kitchen) [V]:lag_0.08s",
+    "192.168.11.3:PIR sensor 03 (closet) [V]:lag_0.08s",
+    "192.168.11.3:PIR sensor 04 (sofa) [V]:lag_0.08s",
+    "192.168.11.4:PIR sensor 00 (center) [V]:lag_0.08s",
+    "192.168.11.4:PIR sensor 01 (tv) [V]:lag_0.08s",
+    "192.168.11.4:PIR sensor 02 (kitchen) [V]:lag_0.08s",
+    "192.168.11.4:PIR sensor 03 (closet) [V]:lag_0.08s",
+    "192.168.11.4:PIR sensor 04 (sofa) [V]:lag_0.08s",
+    "192.168.11.5:PIR sensor 00 (center) [V]:lag_0.08s",
+    "192.168.11.5:PIR sensor 01 (tv) [V]:lag_0.08s",
+    "192.168.11.5:PIR sensor 02 (kitchen) [V]:lag_0.08s",
+    "192.168.11.5:PIR sensor 03 (closet) [V]:lag_0.08s",
+    "192.168.11.5:PIR sensor 04 (sofa) [V]:lag_0.08s",
+    "192.168.11.6:PIR sensor 00 (center) [V]:lag_0.08s",
+    "192.168.11.6:PIR sensor 01 (tv) [V]:lag_0.08s",
+    "192.168.11.6:PIR sensor 02 (kitchen) [V]:lag_0.08s",
+    "192.168.11.6:PIR sensor 03 (closet) [V]:lag_0.08s",
+    "192.168.11.6:PIR sensor 04 (sofa) [V]:lag_0.08s",
+    "192.168.11.2:PIR sensor 00 (center) [V]:lag_0.16s",
+    "192.168.11.2:PIR sensor 01 (tv) [V]:lag_0.16s",
+    "192.168.11.2:PIR sensor 02 (kitchen) [V]:lag_0.16s",
+    "192.168.11.2:PIR sensor 03 (closet) [V]:lag_0.16s",
+    "192.168.11.2:PIR sensor 04 (sofa) [V]:lag_0.16s",
+    "192.168.11.3:PIR sensor 00 (center) [V]:lag_0.16s",
+    "192.168.11.3:PIR sensor 01 (tv) [V]:lag_0.16s",
+    "192.168.11.3:PIR sensor 02 (kitchen) [V]:lag_0.16s",
+    "192.168.11.3:PIR sensor 03 (closet) [V]:lag_0.16s",
+    "192.168.11.3:PIR sensor 04 (sofa) [V]:lag_0.16s",
+    "192.168.11.4:PIR sensor 00 (center) [V]:lag_0.16s",
+    "192.168.11.4:PIR sensor 01 (tv) [V]:lag_0.16s",
+    "192.168.11.4:PIR sensor 02 (kitchen) [V]:lag_0.16s",
+    "192.168.11.4:PIR sensor 03 (closet) [V]:lag_0.16s",
+    "192.168.11.4:PIR sensor 04 (sofa) [V]:lag_0.16s",
+    "192.168.11.5:PIR sensor 00 (center) [V]:lag_0.16s",
+    "192.168.11.5:PIR sensor 01 (tv) [V]:lag_0.16s",
+    "192.168.11.5:PIR sensor 02 (kitchen) [V]:lag_0.16s",
+    "192.168.11.5:PIR sensor 03 (closet) [V]:lag_0.16s",
+    "192.168.11.5:PIR sensor 04 (sofa) [V]:lag_0.16s",
+    "192.168.11.6:PIR sensor 00 (center) [V]:lag_0.16s",
+    "192.168.11.6:PIR sensor 01 (tv) [V]:lag_0.16s",
+    "192.168.11.6:PIR sensor 02 (kitchen) [V]:lag_0.16s",
+    "192.168.11.6:PIR sensor 03 (closet) [V]:lag_0.16s",
+    "192.168.11.6:PIR sensor 04 (sofa) [V]:lag_0.16s",
+    "192.168.11.2:PIR sensor 00 (center) [V]:lag_0.32s",
+    "192.168.11.2:PIR sensor 01 (tv) [V]:lag_0.32s",
+    "192.168.11.2:PIR sensor 02 (kitchen) [V]:lag_0.32s",
+    "192.168.11.2:PIR sensor 03 (closet) [V]:lag_0.32s",
+    "192.168.11.2:PIR sensor 04 (sofa) [V]:lag_0.32s",
+    "192.168.11.3:PIR sensor 00 (center) [V]:lag_0.32s",
+    "192.168.11.3:PIR sensor 01 (tv) [V]:lag_0.32s",
+    "192.168.11.3:PIR sensor 02 (kitchen) [V]:lag_0.32s",
+    "192.168.11.3:PIR sensor 03 (closet) [V]:lag_0.32s",
+    "192.168.11.3:PIR sensor 04 (sofa) [V]:lag_0.32s",
+    "192.168.11.4:PIR sensor 00 (center) [V]:lag_0.32s",
+    "192.168.11.4:PIR sensor 01 (tv) [V]:lag_0.32s",
+    "192.168.11.4:PIR sensor 02 (kitchen) [V]:lag_0.32s",
+    "192.168.11.4:PIR sensor 03 (closet) [V]:lag_0.32s",
+    "192.168.11.4:PIR sensor 04 (sofa) [V]:lag_0.32s",
+    "192.168.11.5:PIR sensor 00 (center) [V]:lag_0.32s",
+    "192.168.11.5:PIR sensor 01 (tv) [V]:lag_0.32s",
+    "192.168.11.5:PIR sensor 02 (kitchen) [V]:lag_0.32s",
+    "192.168.11.5:PIR sensor 03 (closet) [V]:lag_0.32s",
+    "192.168.11.5:PIR sensor 04 (sofa) [V]:lag_0.32s",
+    "192.168.11.6:PIR sensor 00 (center) [V]:lag_0.32s",
+    "192.168.11.6:PIR sensor 01 (tv) [V]:lag_0.32s",
+    "192.168.11.6:PIR sensor 02 (kitchen) [V]:lag_0.32s",
+    "192.168.11.6:PIR sensor 03 (closet) [V]:lag_0.32s",
+    "192.168.11.6:PIR sensor 04 (sofa) [V]:lag_0.32s",
+    "192.168.11.2:PIR sensor 00 (center) [V]:lag_0.64s",
+    "192.168.11.2:PIR sensor 01 (tv) [V]:lag_0.64s",
+    "192.168.11.2:PIR sensor 02 (kitchen) [V]:lag_0.64s",
+    "192.168.11.2:PIR sensor 03 (closet) [V]:lag_0.64s",
+    "192.168.11.2:PIR sensor 04 (sofa) [V]:lag_0.64s",
+    "192.168.11.3:PIR sensor 00 (center) [V]:lag_0.64s",
+    "192.168.11.3:PIR sensor 01 (tv) [V]:lag_0.64s",
+    "192.168.11.3:PIR sensor 02 (kitchen) [V]:lag_0.64s",
+    "192.168.11.3:PIR sensor 03 (closet) [V]:lag_0.64s",
+    "192.168.11.3:PIR sensor 04 (sofa) [V]:lag_0.64s",
+    "192.168.11.4:PIR sensor 00 (center) [V]:lag_0.64s",
+    "192.168.11.4:PIR sensor 01 (tv) [V]:lag_0.64s",
+    "192.168.11.4:PIR sensor 02 (kitchen) [V]:lag_0.64s",
+    "192.168.11.4:PIR sensor 03 (closet) [V]:lag_0.64s",
+    "192.168.11.4:PIR sensor 04 (sofa) [V]:lag_0.64s",
+    "192.168.11.5:PIR sensor 00 (center) [V]:lag_0.64s",
+    "192.168.11.5:PIR sensor 01 (tv) [V]:lag_0.64s",
+    "192.168.11.5:PIR sensor 02 (kitchen) [V]:lag_0.64s",
+    "192.168.11.5:PIR sensor 03 (closet) [V]:lag_0.64s",
+    "192.168.11.5:PIR sensor 04 (sofa) [V]:lag_0.64s",
+    "192.168.11.6:PIR sensor 00 (center) [V]:lag_0.64s",
+    "192.168.11.6:PIR sensor 01 (tv) [V]:lag_0.64s",
+    "192.168.11.6:PIR sensor 02 (kitchen) [V]:lag_0.64s",
+    "192.168.11.6:PIR sensor 03 (closet) [V]:lag_0.64s",
+    "192.168.11.6:PIR sensor 04 (sofa) [V]:lag_0.64s",
+    "192.168.11.2:PIR sensor 00 (center) [V]:lag_1.00s",
+    "192.168.11.2:PIR sensor 01 (tv) [V]:lag_1.00s",
+    "192.168.11.2:PIR sensor 02 (kitchen) [V]:lag_1.00s",
+    "192.168.11.2:PIR sensor 03 (closet) [V]:lag_1.00s",
+    "192.168.11.2:PIR sensor 04 (sofa) [V]:lag_1.00s",
+    "192.168.11.3:PIR sensor 00 (center) [V]:lag_1.00s",
+    "192.168.11.3:PIR sensor 01 (tv) [V]:lag_1.00s",
+    "192.168.11.3:PIR sensor 02 (kitchen) [V]:lag_1.00s",
+    "192.168.11.3:PIR sensor 03 (closet) [V]:lag_1.00s",
+    "192.168.11.3:PIR sensor 04 (sofa) [V]:lag_1.00s",
+    "192.168.11.4:PIR sensor 00 (center) [V]:lag_1.00s",
+    "192.168.11.4:PIR sensor 01 (tv) [V]:lag_1.00s",
+    "192.168.11.4:PIR sensor 02 (kitchen) [V]:lag_1.00s",
+    "192.168.11.4:PIR sensor 03 (closet) [V]:lag_1.00s",
+    "192.168.11.4:PIR sensor 04 (sofa) [V]:lag_1.00s",
+    "192.168.11.5:PIR sensor 00 (center) [V]:lag_1.00s",
+    "192.168.11.5:PIR sensor 01 (tv) [V]:lag_1.00s",
+    "192.168.11.5:PIR sensor 02 (kitchen) [V]:lag_1.00s",
+    "192.168.11.5:PIR sensor 03 (closet) [V]:lag_1.00s",
+    "192.168.11.5:PIR sensor 04 (sofa) [V]:lag_1.00s",
+    "192.168.11.6:PIR sensor 00 (center) [V]:lag_1.00s",
+    "192.168.11.6:PIR sensor 01 (tv) [V]:lag_1.00s",
+    "192.168.11.6:PIR sensor 02 (kitchen) [V]:lag_1.00s",
+    "192.168.11.6:PIR sensor 03 (closet) [V]:lag_1.00s",
+    "192.168.11.6:PIR sensor 04 (sofa) [V]:lag_1.00s",
+    "192.168.11.2:PIR sensor 00 (center) [V]:lag_1.50s",
+    "192.168.11.2:PIR sensor 01 (tv) [V]:lag_1.50s",
+    "192.168.11.2:PIR sensor 02 (kitchen) [V]:lag_1.50s",
+    "192.168.11.2:PIR sensor 03 (closet) [V]:lag_1.50s",
+    "192.168.11.2:PIR sensor 04 (sofa) [V]:lag_1.50s",
+    "192.168.11.3:PIR sensor 00 (center) [V]:lag_1.50s",
+    "192.168.11.3:PIR sensor 01 (tv) [V]:lag_1.50s",
+    "192.168.11.3:PIR sensor 02 (kitchen) [V]:lag_1.50s",
+    "192.168.11.3:PIR sensor 03 (closet) [V]:lag_1.50s",
+    "192.168.11.3:PIR sensor 04 (sofa) [V]:lag_1.50s",
+    "192.168.11.4:PIR sensor 00 (center) [V]:lag_1.50s",
+    "192.168.11.4:PIR sensor 01 (tv) [V]:lag_1.50s",
+    "192.168.11.4:PIR sensor 02 (kitchen) [V]:lag_1.50s",
+    "192.168.11.4:PIR sensor 03 (closet) [V]:lag_1.50s",
+    "192.168.11.4:PIR sensor 04 (sofa) [V]:lag_1.50s",
+    "192.168.11.5:PIR sensor 00 (center) [V]:lag_1.50s",
+    "192.168.11.5:PIR sensor 01 (tv) [V]:lag_1.50s",
+    "192.168.11.5:PIR sensor 02 (kitchen) [V]:lag_1.50s",
+    "192.168.11.5:PIR sensor 03 (closet) [V]:lag_1.50s",
+    "192.168.11.5:PIR sensor 04 (sofa) [V]:lag_1.50s",
+    "192.168.11.6:PIR sensor 00 (center) [V]:lag_1.50s",
+    "192.168.11.6:PIR sensor 01 (tv) [V]:lag_1.50s",
+    "192.168.11.6:PIR sensor 02 (kitchen) [V]:lag_1.50s",
+    "192.168.11.6:PIR sensor 03 (closet) [V]:lag_1.50s",
+    "192.168.11.6:PIR sensor 04 (sofa) [V]:lag_1.50s",
+    "192.168.11.2:PIR sensor 00 (center) [V]:lag_2.00s",
+    "192.168.11.2:PIR sensor 01 (tv) [V]:lag_2.00s",
+    "192.168.11.2:PIR sensor 02 (kitchen) [V]:lag_2.00s",
+    "192.168.11.2:PIR sensor 03 (closet) [V]:lag_2.00s",
+    "192.168.11.2:PIR sensor 04 (sofa) [V]:lag_2.00s",
+    "192.168.11.3:PIR sensor 00 (center) [V]:lag_2.00s",
+    "192.168.11.3:PIR sensor 01 (tv) [V]:lag_2.00s",
+    "192.168.11.3:PIR sensor 02 (kitchen) [V]:lag_2.00s",
+    "192.168.11.3:PIR sensor 03 (closet) [V]:lag_2.00s",
+    "192.168.11.3:PIR sensor 04 (sofa) [V]:lag_2.00s",
+    "192.168.11.4:PIR sensor 00 (center) [V]:lag_2.00s",
+    "192.168.11.4:PIR sensor 01 (tv) [V]:lag_2.00s",
+    "192.168.11.4:PIR sensor 02 (kitchen) [V]:lag_2.00s",
+    "192.168.11.4:PIR sensor 03 (closet) [V]:lag_2.00s",
+    "192.168.11.4:PIR sensor 04 (sofa) [V]:lag_2.00s",
+    "192.168.11.5:PIR sensor 00 (center) [V]:lag_2.00s",
+    "192.168.11.5:PIR sensor 01 (tv) [V]:lag_2.00s",
+    "192.168.11.5:PIR sensor 02 (kitchen) [V]:lag_2.00s",
+    "192.168.11.5:PIR sensor 03 (closet) [V]:lag_2.00s",
+    "192.168.11.5:PIR sensor 04 (sofa) [V]:lag_2.00s",
+    "192.168.11.6:PIR sensor 00 (center) [V]:lag_2.00s",
+    "192.168.11.6:PIR sensor 01 (tv) [V]:lag_2.00s",
+    "192.168.11.6:PIR sensor 02 (kitchen) [V]:lag_2.00s",
+    "192.168.11.6:PIR sensor 03 (closet) [V]:lag_2.00s",
+    "192.168.11.6:PIR sensor 04 (sofa) [V]:lag_2.00s",
+    "192.168.11.2:PIR sensor 00 (center) [V]:lag_3.00s",
+    "192.168.11.2:PIR sensor 01 (tv) [V]:lag_3.00s",
+    "192.168.11.2:PIR sensor 02 (kitchen) [V]:lag_3.00s",
+    "192.168.11.2:PIR sensor 03 (closet) [V]:lag_3.00s",
+    "192.168.11.2:PIR sensor 04 (sofa) [V]:lag_3.00s",
+    "192.168.11.3:PIR sensor 00 (center) [V]:lag_3.00s",
+    "192.168.11.3:PIR sensor 01 (tv) [V]:lag_3.00s",
+    "192.168.11.3:PIR sensor 02 (kitchen) [V]:lag_3.00s",
+    "192.168.11.3:PIR sensor 03 (closet) [V]:lag_3.00s",
+    "192.168.11.3:PIR sensor 04 (sofa) [V]:lag_3.00s",
+    "192.168.11.4:PIR sensor 00 (center) [V]:lag_3.00s",
+    "192.168.11.4:PIR sensor 01 (tv) [V]:lag_3.00s",
+    "192.168.11.4:PIR sensor 02 (kitchen) [V]:lag_3.00s",
+    "192.168.11.4:PIR sensor 03 (closet) [V]:lag_3.00s",
+    "192.168.11.4:PIR sensor 04 (sofa) [V]:lag_3.00s",
+    "192.168.11.5:PIR sensor 00 (center) [V]:lag_3.00s",
+    "192.168.11.5:PIR sensor 01 (tv) [V]:lag_3.00s",
+    "192.168.11.5:PIR sensor 02 (kitchen) [V]:lag_3.00s",
+    "192.168.11.5:PIR sensor 03 (closet) [V]:lag_3.00s",
+    "192.168.11.5:PIR sensor 04 (sofa) [V]:lag_3.00s",
+    "192.168.11.6:PIR sensor 00 (center) [V]:lag_3.00s",
+    "192.168.11.6:PIR sensor 01 (tv) [V]:lag_3.00s",
+    "192.168.11.6:PIR sensor 02 (kitchen) [V]:lag_3.00s",
+    "192.168.11.6:PIR sensor 03 (closet) [V]:lag_3.00s",
+    "192.168.11.6:PIR sensor 04 (sofa) [V]:lag_3.00s",
+    "192.168.11.2:PIR sensor 00 (center) [V]:delta_0.16s",
+    "192.168.11.2:PIR sensor 01 (tv) [V]:delta_0.16s",
+    "192.168.11.2:PIR sensor 02 (kitchen) [V]:delta_0.16s",
+    "192.168.11.2:PIR sensor 03 (closet) [V]:delta_0.16s",
+    "192.168.11.2:PIR sensor 04 (sofa) [V]:delta_0.16s",
+    "192.168.11.3:PIR sensor 00 (center) [V]:delta_0.16s",
+    "192.168.11.3:PIR sensor 01 (tv) [V]:delta_0.16s",
+    "192.168.11.3:PIR sensor 02 (kitchen) [V]:delta_0.16s",
+    "192.168.11.3:PIR sensor 03 (closet) [V]:delta_0.16s",
+    "192.168.11.3:PIR sensor 04 (sofa) [V]:delta_0.16s",
+    "192.168.11.4:PIR sensor 00 (center) [V]:delta_0.16s",
+    "192.168.11.4:PIR sensor 01 (tv) [V]:delta_0.16s",
+    "192.168.11.4:PIR sensor 02 (kitchen) [V]:delta_0.16s",
+    "192.168.11.4:PIR sensor 03 (closet) [V]:delta_0.16s",
+    "192.168.11.4:PIR sensor 04 (sofa) [V]:delta_0.16s",
+    "192.168.11.5:PIR sensor 00 (center) [V]:delta_0.16s",
+    "192.168.11.5:PIR sensor 01 (tv) [V]:delta_0.16s",
+    "192.168.11.5:PIR sensor 02 (kitchen) [V]:delta_0.16s",
+    "192.168.11.5:PIR sensor 03 (closet) [V]:delta_0.16s",
+    "192.168.11.5:PIR sensor 04 (sofa) [V]:delta_0.16s",
+    "192.168.11.6:PIR sensor 00 (center) [V]:delta_0.16s",
+    "192.168.11.6:PIR sensor 01 (tv) [V]:delta_0.16s",
+    "192.168.11.6:PIR sensor 02 (kitchen) [V]:delta_0.16s",
+    "192.168.11.6:PIR sensor 03 (closet) [V]:delta_0.16s",
+    "192.168.11.6:PIR sensor 04 (sofa) [V]:delta_0.16s",
+    "192.168.11.2:PIR sensor 00 (center) [V]:delta_0.64s",
+    "192.168.11.2:PIR sensor 01 (tv) [V]:delta_0.64s",
+    "192.168.11.2:PIR sensor 02 (kitchen) [V]:delta_0.64s",
+    "192.168.11.2:PIR sensor 03 (closet) [V]:delta_0.64s",
+    "192.168.11.2:PIR sensor 04 (sofa) [V]:delta_0.64s",
+    "192.168.11.3:PIR sensor 00 (center) [V]:delta_0.64s",
+    "192.168.11.3:PIR sensor 01 (tv) [V]:delta_0.64s",
+    "192.168.11.3:PIR sensor 02 (kitchen) [V]:delta_0.64s",
+    "192.168.11.3:PIR sensor 03 (closet) [V]:delta_0.64s",
+    "192.168.11.3:PIR sensor 04 (sofa) [V]:delta_0.64s",
+    "192.168.11.4:PIR sensor 00 (center) [V]:delta_0.64s",
+    "192.168.11.4:PIR sensor 01 (tv) [V]:delta_0.64s",
+    "192.168.11.4:PIR sensor 02 (kitchen) [V]:delta_0.64s",
+    "192.168.11.4:PIR sensor 03 (closet) [V]:delta_0.64s",
+    "192.168.11.4:PIR sensor 04 (sofa) [V]:delta_0.64s",
+    "192.168.11.5:PIR sensor 00 (center) [V]:delta_0.64s",
+    "192.168.11.5:PIR sensor 01 (tv) [V]:delta_0.64s",
+    "192.168.11.5:PIR sensor 02 (kitchen) [V]:delta_0.64s",
+    "192.168.11.5:PIR sensor 03 (closet) [V]:delta_0.64s",
+    "192.168.11.5:PIR sensor 04 (sofa) [V]:delta_0.64s",
+    "192.168.11.6:PIR sensor 00 (center) [V]:delta_0.64s",
+    "192.168.11.6:PIR sensor 01 (tv) [V]:delta_0.64s",
+    "192.168.11.6:PIR sensor 02 (kitchen) [V]:delta_0.64s",
+    "192.168.11.6:PIR sensor 03 (closet) [V]:delta_0.64s",
+    "192.168.11.6:PIR sensor 04 (sofa) [V]:delta_0.64s",
+    "192.168.11.2:PIR sensor 00 (center) [V]:delta_1.50s",
+    "192.168.11.2:PIR sensor 01 (tv) [V]:delta_1.50s",
+    "192.168.11.2:PIR sensor 02 (kitchen) [V]:delta_1.50s",
+    "192.168.11.2:PIR sensor 03 (closet) [V]:delta_1.50s",
+    "192.168.11.2:PIR sensor 04 (sofa) [V]:delta_1.50s",
+    "192.168.11.3:PIR sensor 00 (center) [V]:delta_1.50s",
+    "192.168.11.3:PIR sensor 01 (tv) [V]:delta_1.50s",
+    "192.168.11.3:PIR sensor 02 (kitchen) [V]:delta_1.50s",
+    "192.168.11.3:PIR sensor 03 (closet) [V]:delta_1.50s",
+    "192.168.11.3:PIR sensor 04 (sofa) [V]:delta_1.50s",
+    "192.168.11.4:PIR sensor 00 (center) [V]:delta_1.50s",
+    "192.168.11.4:PIR sensor 01 (tv) [V]:delta_1.50s",
+    "192.168.11.4:PIR sensor 02 (kitchen) [V]:delta_1.50s",
+    "192.168.11.4:PIR sensor 03 (closet) [V]:delta_1.50s",
+    "192.168.11.4:PIR sensor 04 (sofa) [V]:delta_1.50s",
+    "192.168.11.5:PIR sensor 00 (center) [V]:delta_1.50s",
+    "192.168.11.5:PIR sensor 01 (tv) [V]:delta_1.50s",
+    "192.168.11.5:PIR sensor 02 (kitchen) [V]:delta_1.50s",
+    "192.168.11.5:PIR sensor 03 (closet) [V]:delta_1.50s",
+    "192.168.11.5:PIR sensor 04 (sofa) [V]:delta_1.50s",
+    "192.168.11.6:PIR sensor 00 (center) [V]:delta_1.50s",
+    "192.168.11.6:PIR sensor 01 (tv) [V]:delta_1.50s",
+    "192.168.11.6:PIR sensor 02 (kitchen) [V]:delta_1.50s",
+    "192.168.11.6:PIR sensor 03 (closet) [V]:delta_1.50s",
+    "192.168.11.6:PIR sensor 04 (sofa) [V]:delta_1.50s",
+    "192.168.11.2:PIR sensor 00 (center) [V]:delta_3.00s",
+    "192.168.11.2:PIR sensor 01 (tv) [V]:delta_3.00s",
+    "192.168.11.2:PIR sensor 02 (kitchen) [V]:delta_3.00s",
+    "192.168.11.2:PIR sensor 03 (closet) [V]:delta_3.00s",
+    "192.168.11.2:PIR sensor 04 (sofa) [V]:delta_3.00s",
+    "192.168.11.3:PIR sensor 00 (center) [V]:delta_3.00s",
+    "192.168.11.3:PIR sensor 01 (tv) [V]:delta_3.00s",
+    "192.168.11.3:PIR sensor 02 (kitchen) [V]:delta_3.00s",
+    "192.168.11.3:PIR sensor 03 (closet) [V]:delta_3.00s",
+    "192.168.11.3:PIR sensor 04 (sofa) [V]:delta_3.00s",
+    "192.168.11.4:PIR sensor 00 (center) [V]:delta_3.00s",
+    "192.168.11.4:PIR sensor 01 (tv) [V]:delta_3.00s",
+    "192.168.11.4:PIR sensor 02 (kitchen) [V]:delta_3.00s",
+    "192.168.11.4:PIR sensor 03 (closet) [V]:delta_3.00s",
+    "192.168.11.4:PIR sensor 04 (sofa) [V]:delta_3.00s",
+    "192.168.11.5:PIR sensor 00 (center) [V]:delta_3.00s",
+    "192.168.11.5:PIR sensor 01 (tv) [V]:delta_3.00s",
+    "192.168.11.5:PIR sensor 02 (kitchen) [V]:delta_3.00s",
+    "192.168.11.5:PIR sensor 03 (closet) [V]:delta_3.00s",
+    "192.168.11.5:PIR sensor 04 (sofa) [V]:delta_3.00s",
+    "192.168.11.6:PIR sensor 00 (center) [V]:delta_3.00s",
+    "192.168.11.6:PIR sensor 01 (tv) [V]:delta_3.00s",
+    "192.168.11.6:PIR sensor 02 (kitchen) [V]:delta_3.00s",
+    "192.168.11.6:PIR sensor 03 (closet) [V]:delta_3.00s",
+    "192.168.11.6:PIR sensor 04 (sofa) [V]:delta_3.00s",
+    "192.168.11.2:PIR sensor 00 (center) [V]:d_dt",
+    "192.168.11.2:PIR sensor 01 (tv) [V]:d_dt",
+    "192.168.11.2:PIR sensor 02 (kitchen) [V]:d_dt",
+    "192.168.11.2:PIR sensor 03 (closet) [V]:d_dt",
+    "192.168.11.2:PIR sensor 04 (sofa) [V]:d_dt",
+    "192.168.11.3:PIR sensor 00 (center) [V]:d_dt",
+    "192.168.11.3:PIR sensor 01 (tv) [V]:d_dt",
+    "192.168.11.3:PIR sensor 02 (kitchen) [V]:d_dt",
+    "192.168.11.3:PIR sensor 03 (closet) [V]:d_dt",
+    "192.168.11.3:PIR sensor 04 (sofa) [V]:d_dt",
+    "192.168.11.4:PIR sensor 00 (center) [V]:d_dt",
+    "192.168.11.4:PIR sensor 01 (tv) [V]:d_dt",
+    "192.168.11.4:PIR sensor 02 (kitchen) [V]:d_dt",
+    "192.168.11.4:PIR sensor 03 (closet) [V]:d_dt",
+    "192.168.11.4:PIR sensor 04 (sofa) [V]:d_dt",
+    "192.168.11.5:PIR sensor 00 (center) [V]:d_dt",
+    "192.168.11.5:PIR sensor 01 (tv) [V]:d_dt",
+    "192.168.11.5:PIR sensor 02 (kitchen) [V]:d_dt",
+    "192.168.11.5:PIR sensor 03 (closet) [V]:d_dt",
+    "192.168.11.5:PIR sensor 04 (sofa) [V]:d_dt",
+    "192.168.11.6:PIR sensor 00 (center) [V]:d_dt",
+    "192.168.11.6:PIR sensor 01 (tv) [V]:d_dt",
+    "192.168.11.6:PIR sensor 02 (kitchen) [V]:d_dt",
+    "192.168.11.6:PIR sensor 03 (closet) [V]:d_dt",
+    "192.168.11.6:PIR sensor 04 (sofa) [V]:d_dt"
+  ],
+  "train": {
+    "rmse_mm": 56.16148376464844,
+    "mae_mm": 36.6719970703125,
+    "mean_joint_error_mm": 84.48236846923828,
+    "p95_mean_joint_error_mm": 160.19235229492188,
+    "r2_global": 0.9980159369425663
+  },
+  "test": {
+    "rmse_mm": 408.96575927734375,
+    "mae_mm": 233.0446319580078,
+    "mean_joint_error_mm": 531.9920654296875,
+    "p95_mean_joint_error_mm": 1459.597900390625,
+    "r2_global": 0.8928605507766385,
+    "baseline_rmse_mm": 1249.531005859375,
+    "baseline_mae_mm": 910.0419311523438
+  },
+  "joint_test_rmse": [
+    {
+      "joint": "abdomen",
+      "position_rmse_mm": 683.0374145507812
+    },
+    {
+      "joint": "head",
+      "position_rmse_mm": 694.8443603515625
+    },
+    {
+      "joint": "l_foot",
+      "position_rmse_mm": 706.0858764648438
+    },
+    {
+      "joint": "l_hand",
+      "position_rmse_mm": 751.327880859375
+    },
+    {
+      "joint": "l_larm",
+      "position_rmse_mm": 714.514404296875
+    },
+    {
+      "joint": "l_shank",
+      "position_rmse_mm": 722.4703369140625
+    },
+    {
+      "joint": "l_thigh",
+      "position_rmse_mm": 698.6050415039062
+    },
+    {
+      "joint": "l_toes",
+      "position_rmse_mm": 752.22705078125
+    },
+    {
+      "joint": "l_uarm",
+      "position_rmse_mm": 706.3818359375
+    },
+    {
+      "joint": "neck",
+      "position_rmse_mm": 696.580322265625
+    },
+    {
+      "joint": "pelvis",
+      "position_rmse_mm": 683.0388793945312
+    },
+    {
+      "joint": "r_foot",
+      "position_rmse_mm": 704.703369140625
+    },
+    {
+      "joint": "r_hand",
+      "position_rmse_mm": 723.7820434570312
+    },
+    {
+      "joint": "r_larm",
+      "position_rmse_mm": 686.0289306640625
+    },
+    {
+      "joint": "r_shank",
+      "position_rmse_mm": 715.6038818359375
+    },
+    {
+      "joint": "r_thigh",
+      "position_rmse_mm": 685.4496459960938
+    },
+    {
+      "joint": "r_toes",
+      "position_rmse_mm": 749.4343872070312
+    },
+    {
+      "joint": "r_uarm",
+      "position_rmse_mm": 681.1640625
+    },
+    {
+      "joint": "thorax",
+      "position_rmse_mm": 696.577880859375
+    }
+  ],
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.22679952339214438,
+      "val_loss": 0.278403761330992,
+      "lr": 0.001
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.0897827947840971,
+      "val_loss": 0.2633066005073488,
+      "lr": 0.001
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.06704906624029665,
+      "val_loss": 0.2598476600833237,
+      "lr": 0.001
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.05534025873331463,
+      "val_loss": 0.2542202826589346,
+      "lr": 0.001
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.04875405102091677,
+      "val_loss": 0.25764351431280375,
+      "lr": 0.001
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.0440328151864164,
+      "val_loss": 0.25209064362570643,
+      "lr": 0.001
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.03913509490735391,
+      "val_loss": 0.2547109192237258,
+      "lr": 0.001
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.036648588539922936,
+      "val_loss": 0.25121483486145735,
+      "lr": 0.001
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.03369134068489075,
+      "val_loss": 0.2508200374431908,
+      "lr": 0.001
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.031511955489130584,
+      "val_loss": 0.25398564897477627,
+      "lr": 0.001
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.03008073399610379,
+      "val_loss": 0.25067074317485094,
+      "lr": 0.001
+    },
+    {
+      "epoch": 12,
+      "train_loss": 0.028460379448883674,
+      "val_loss": 0.24658978171646595,
+      "lr": 0.001
+    },
+    {
+      "epoch": 13,
+      "train_loss": 0.026961512775982126,
+      "val_loss": 0.24790713423863053,
+      "lr": 0.001
+    },
+    {
+      "epoch": 14,
+      "train_loss": 0.026041583892177134,
+      "val_loss": 0.2459256644360721,
+      "lr": 0.001
+    },
+    {
+      "epoch": 15,
+      "train_loss": 0.02528724547694711,
+      "val_loss": 0.24656219920143485,
+      "lr": 0.001
+    },
+    {
+      "epoch": 16,
+      "train_loss": 0.024453444362563245,
+      "val_loss": 0.2489809929393232,
+      "lr": 0.001
+    },
+    {
+      "epoch": 17,
+      "train_loss": 0.02318966627559241,
+      "val_loss": 0.24359776871278882,
+      "lr": 0.001
+    },
+    {
+      "epoch": 18,
+      "train_loss": 0.022889504384468583,
+      "val_loss": 0.24298281548544765,
+      "lr": 0.001
+    },
+    {
+      "epoch": 19,
+      "train_loss": 0.022569783097680877,
+      "val_loss": 0.24186330428346992,
+      "lr": 0.001
+    },
+    {
+      "epoch": 20,
+      "train_loss": 0.02159164024188238,
+      "val_loss": 0.24143422860652208,
+      "lr": 0.001
+    },
+    {
+      "epoch": 21,
+      "train_loss": 0.021426289309473597,
+      "val_loss": 0.24076065281406045,
+      "lr": 0.001
+    },
+    {
+      "epoch": 22,
+      "train_loss": 0.020989380119478002,
+      "val_loss": 0.24167755525559187,
+      "lr": 0.001
+    },
+    {
+      "epoch": 23,
+      "train_loss": 0.020565914691371076,
+      "val_loss": 0.23976846737787127,
+      "lr": 0.001
+    },
+    {
+      "epoch": 24,
+      "train_loss": 0.02013015825958813,
+      "val_loss": 0.2409314587712288,
+      "lr": 0.001
+    },
+    {
+      "epoch": 25,
+      "train_loss": 0.019859612535904434,
+      "val_loss": 0.2404545326717198,
+      "lr": 0.001
+    },
+    {
+      "epoch": 26,
+      "train_loss": 0.019300936359693023,
+      "val_loss": 0.23962843930348754,
+      "lr": 0.001
+    },
+    {
+      "epoch": 27,
+      "train_loss": 0.018946221668054077,
+      "val_loss": 0.24162008659914136,
+      "lr": 0.001
+    },
+    {
+      "epoch": 28,
+      "train_loss": 0.01877574828617713,
+      "val_loss": 0.23970976611599326,
+      "lr": 0.001
+    },
+    {
+      "epoch": 29,
+      "train_loss": 0.01854007912471014,
+      "val_loss": 0.24028186779469252,
+      "lr": 0.001
+    },
+    {
+      "epoch": 30,
+      "train_loss": 0.01819191947579384,
+      "val_loss": 0.23943549627438188,
+      "lr": 0.001
+    },
+    {
+      "epoch": 31,
+      "train_loss": 0.017930051574812218,
+      "val_loss": 0.24064280837774277,
+      "lr": 0.001
+    },
+    {
+      "epoch": 32,
+      "train_loss": 0.01769315922523246,
+      "val_loss": 0.23869331274181604,
+      "lr": 0.001
+    },
+    {
+      "epoch": 33,
+      "train_loss": 0.01756923954714747,
+      "val_loss": 0.23633998865261674,
+      "lr": 0.001
+    },
+    {
+      "epoch": 34,
+      "train_loss": 0.017452818297726266,
+      "val_loss": 0.23559405794367194,
+      "lr": 0.001
+    },
+    {
+      "epoch": 35,
+      "train_loss": 0.017404701242990355,
+      "val_loss": 0.23590694600716233,
+      "lr": 0.001
+    },
+    {
+      "epoch": 36,
+      "train_loss": 0.017081656810991903,
+      "val_loss": 0.2382807144895196,
+      "lr": 0.001
+    },
+    {
+      "epoch": 37,
+      "train_loss": 0.016709884825874776,
+      "val_loss": 0.2338143032975495,
+      "lr": 0.001
+    },
+    {
+      "epoch": 38,
+      "train_loss": 0.016902294393409702,
+      "val_loss": 0.23432125663384795,
+      "lr": 0.001
+    },
+    {
+      "epoch": 39,
+      "train_loss": 0.016644598160158185,
+      "val_loss": 0.23196334950625896,
+      "lr": 0.001
+    },
+    {
+      "epoch": 40,
+      "train_loss": 0.016351714423474144,
+      "val_loss": 0.23584845568984747,
+      "lr": 0.001
+    },
+    {
+      "epoch": 41,
+      "train_loss": 0.015987714401939336,
+      "val_loss": 0.232776899356395,
+      "lr": 0.001
+    },
+    {
+      "epoch": 42,
+      "train_loss": 0.016058838290765005,
+      "val_loss": 0.23563119396567345,
+      "lr": 0.001
+    },
+    {
+      "epoch": 43,
+      "train_loss": 0.016037226599805495,
+      "val_loss": 0.23587615275755525,
+      "lr": 0.001
+    },
+    {
+      "epoch": 44,
+      "train_loss": 0.015770623120753204,
+      "val_loss": 0.23474078672006726,
+      "lr": 0.001
+    },
+    {
+      "epoch": 45,
+      "train_loss": 0.015514247743960688,
+      "val_loss": 0.236774995457381,
+      "lr": 0.0005
+    },
+    {
+      "epoch": 46,
+      "train_loss": 0.013373606323319322,
+      "val_loss": 0.23306186636909842,
+      "lr": 0.0005
+    },
+    {
+      "epoch": 47,
+      "train_loss": 0.012447606312001452,
+      "val_loss": 0.23433472262695432,
+      "lr": 0.0005
+    },
+    {
+      "epoch": 48,
+      "train_loss": 0.012242724801249364,
+      "val_loss": 0.2325130752287805,
+      "lr": 0.0005
+    },
+    {
+      "epoch": 49,
+      "train_loss": 0.012060938304399743,
+      "val_loss": 0.231508060824126,
+      "lr": 0.0005
+    },
+    {
+      "epoch": 50,
+      "train_loss": 0.011968425398363786,
+      "val_loss": 0.23323308350518346,
+      "lr": 0.0005
+    },
+    {
+      "epoch": 51,
+      "train_loss": 0.011961923210936434,
+      "val_loss": 0.2310134512372315,
+      "lr": 0.0005
+    },
+    {
+      "epoch": 52,
+      "train_loss": 0.01188319773577592,
+      "val_loss": 0.2317962539382279,
+      "lr": 0.0005
+    },
+    {
+      "epoch": 53,
+      "train_loss": 0.011938645153799478,
+      "val_loss": 0.23091202229261398,
+      "lr": 0.0005
+    },
+    {
+      "epoch": 54,
+      "train_loss": 0.012068005377317175,
+      "val_loss": 0.23153624637052417,
+      "lr": 0.0005
+    },
+    {
+      "epoch": 55,
+      "train_loss": 0.011906237242852941,
+      "val_loss": 0.23259392427280545,
+      "lr": 0.0005
+    },
+    {
+      "epoch": 56,
+      "train_loss": 0.011977916627245792,
+      "val_loss": 0.2320281509310007,
+      "lr": 0.0005
+    },
+    {
+      "epoch": 57,
+      "train_loss": 0.011952295778867077,
+      "val_loss": 0.23228854639455676,
+      "lr": 0.0005
+    },
+    {
+      "epoch": 58,
+      "train_loss": 0.011982353568515357,
+      "val_loss": 0.23245921218767762,
+      "lr": 0.0005
+    },
+    {
+      "epoch": 59,
+      "train_loss": 0.011960424833437976,
+      "val_loss": 0.23181773768737912,
+      "lr": 0.00025
+    },
+    {
+      "epoch": 60,
+      "train_loss": 0.011051781880943214,
+      "val_loss": 0.23208929458633065,
+      "lr": 0.00025
+    },
+    {
+      "epoch": 61,
+      "train_loss": 0.010453210595776053,
+      "val_loss": 0.23187053902074695,
+      "lr": 0.00025
+    },
+    {
+      "epoch": 62,
+      "train_loss": 0.010384647471501546,
+      "val_loss": 0.2323574316687882,
+      "lr": 0.00025
+    },
+    {
+      "epoch": 63,
+      "train_loss": 0.0102976269691306,
+      "val_loss": 0.23279765527695417,
+      "lr": 0.00025
+    },
+    {
+      "epoch": 64,
+      "train_loss": 0.010267386618344223,
+      "val_loss": 0.23189454898238182,
+      "lr": 0.00025
+    },
+    {
+      "epoch": 65,
+      "train_loss": 0.010239676090286058,
+      "val_loss": 0.23205453855916858,
+      "lr": 0.000125
+    },
+    {
+      "epoch": 66,
+      "train_loss": 0.009876632898607674,
+      "val_loss": 0.23157323291525245,
+      "lr": 0.000125
+    },
+    {
+      "epoch": 67,
+      "train_loss": 0.009597881094497792,
+      "val_loss": 0.23249845998361707,
+      "lr": 0.000125
+    },
+    {
+      "epoch": 68,
+      "train_loss": 0.009524363991530503,
+      "val_loss": 0.2322906027548015,
+      "lr": 0.000125
+    },
+    {
+      "epoch": 69,
+      "train_loss": 0.009540341060389491,
+      "val_loss": 0.23291948158293962,
+      "lr": 0.000125
+    }
+  ]
+}

@@ -1,0 +1,868 @@
+import csv
+import argparse
+import json
+from pathlib import Path
+
+
+DEFAULT_INPUT = Path("analysis/20260623/model_output_global/test_predictions.csv")
+DEFAULT_OUTPUT = Path("analysis/20260623/model_output_global/prediction_viewer")
+
+
+HTML = """<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PIR Global Bone Prediction Viewer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>PIR Global Bone Prediction Viewer</h1>
+      <p id="statusText">読み込み中</p>
+    </div>
+    <div class="controls">
+      <select id="modelSelect" aria-label="Model"></select>
+      <button id="prevBtn" type="button">Prev</button>
+      <button id="playBtn" type="button">Play</button>
+      <button id="nextBtn" type="button">Next</button>
+      <button id="exportBtn" type="button">Export</button>
+      <label>Frame <input id="frameSlider" type="range" min="0" max="0" value="0"></label>
+    </div>
+  </header>
+  <main class="layout">
+    <section class="viewer">
+      <canvas id="scene" width="1280" height="760"></canvas>
+    </section>
+    <aside class="side">
+      <div class="metric"><span>Model</span><strong id="modelText">-</strong></div>
+      <div class="metric"><span>Trial</span><strong id="trialText">-</strong></div>
+      <div class="metric"><span>Frame</span><strong id="frameText">-</strong></div>
+      <div class="metric"><span>Mean Joint Error</span><strong id="errorText">-</strong></div>
+      <div class="metric"><span>Worst Joint</span><strong id="worstText">-</strong></div>
+      <div class="legend">
+        <span><i class="true"></i>True</span>
+        <span><i class="pred"></i>Predicted</span>
+        <span><i class="err"></i>Error link</span>
+      </div>
+    </aside>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
+"""
+
+
+CSS = """:root {
+  color-scheme: light;
+  --bg: #eef2f4;
+  --panel: #ffffff;
+  --ink: #182026;
+  --muted: #63717b;
+  --line: #d5dde3;
+  --true: #1f5f9f;
+  --pred: #d87522;
+  --err: #8a949e;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-width: 980px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Segoe UI", "Meiryo", sans-serif;
+  letter-spacing: 0;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.97);
+  border-bottom: 1px solid var(--line);
+}
+
+h1, p { margin: 0; }
+h1 { font-size: 19px; }
+p { margin-top: 3px; color: var(--muted); font-size: 13px; }
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+button, input, select {
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+}
+
+button, select {
+  min-width: 64px;
+  padding: 0 12px;
+  font-weight: 700;
+}
+
+button {
+  cursor: pointer;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+input[type="range"] { width: 360px; }
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 250px;
+  gap: 12px;
+  padding: 12px 16px 16px;
+}
+
+.viewer, .side {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: calc(100vh - 94px);
+  min-height: 620px;
+  cursor: grab;
+}
+
+canvas:active { cursor: grabbing; }
+
+.side {
+  padding: 12px;
+}
+
+.metric {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.metric span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.metric strong {
+  display: block;
+  margin-top: 5px;
+  overflow-wrap: anywhere;
+  font-size: 19px;
+}
+
+.legend {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.legend i {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 7px;
+  border-radius: 3px;
+  vertical-align: -1px;
+}
+
+.legend .true { background: var(--true); }
+.legend .pred { background: var(--pred); }
+.legend .err { background: var(--err); }
+"""
+
+
+JS = """const BONES = [
+  ["pelvis", "abdomen"], ["abdomen", "thorax"], ["thorax", "neck"], ["neck", "head"],
+  ["pelvis", "l_thigh"], ["l_thigh", "l_shank"], ["l_shank", "l_foot"], ["l_foot", "l_toes"],
+  ["pelvis", "r_thigh"], ["r_thigh", "r_shank"], ["r_shank", "r_foot"], ["r_foot", "r_toes"],
+  ["thorax", "l_uarm"], ["l_uarm", "l_larm"], ["l_larm", "l_hand"],
+  ["thorax", "r_uarm"], ["r_uarm", "r_larm"], ["r_larm", "r_hand"]
+];
+
+const state = {
+  root: null,
+  data: null,
+  modelIndex: 0,
+  index: 0,
+  playing: false,
+  yaw: -0.62,
+  pitch: 0.24,
+  drag: null,
+  lastTick: 0
+};
+
+const els = {
+  status: document.getElementById("statusText"),
+  canvas: document.getElementById("scene"),
+  modelSelect: document.getElementById("modelSelect"),
+  slider: document.getElementById("frameSlider"),
+  play: document.getElementById("playBtn"),
+  prev: document.getElementById("prevBtn"),
+  next: document.getElementById("nextBtn"),
+  export: document.getElementById("exportBtn"),
+  model: document.getElementById("modelText"),
+  trial: document.getElementById("trialText"),
+  frame: document.getElementById("frameText"),
+  error: document.getElementById("errorText"),
+  worst: document.getElementById("worstText")
+};
+
+function fitCanvas() {
+  const rect = els.canvas.getBoundingClientRect();
+  const scale = window.devicePixelRatio || 1;
+  const width = Math.max(1, Math.round(rect.width * scale));
+  const height = Math.max(1, Math.round(rect.height * scale));
+  if (els.canvas.width !== width || els.canvas.height !== height) {
+    els.canvas.width = width;
+    els.canvas.height = height;
+  }
+  return { width: width / scale, height: height / scale, scale };
+}
+
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function fmt(value, digits = 1) {
+  return Number.isFinite(value) ? Number(value).toFixed(digits) : "-";
+}
+
+function jointsFromFlat(row) {
+  const out = {};
+  state.data.joints.forEach((joint, idx) => {
+    out[joint] = row.slice(idx * 3, idx * 3 + 3);
+  });
+  return out;
+}
+
+function rotate(point) {
+  const [x, y, z] = point;
+  const cy = Math.cos(state.yaw);
+  const sy = Math.sin(state.yaw);
+  const cp = Math.cos(state.pitch);
+  const sp = Math.sin(state.pitch);
+  const xYaw = x * cy - y * sy;
+  const depthYaw = x * sy + y * cy;
+  const zPitch = z * cp - depthYaw * sp;
+  const depth = z * sp + depthYaw * cp;
+  return { x: xYaw, y: -zPitch, depth };
+}
+
+function boundsCorners(bounds) {
+  const b = bounds;
+  return [
+    [b.min[0], b.min[1], b.min[2]], [b.max[0], b.min[1], b.min[2]],
+    [b.min[0], b.max[1], b.min[2]], [b.max[0], b.max[1], b.min[2]],
+    [b.min[0], b.min[1], b.max[2]], [b.max[0], b.min[1], b.max[2]],
+    [b.min[0], b.max[1], b.max[2]], [b.max[0], b.max[1], b.max[2]]
+  ];
+}
+
+function makeProjection(bounds, rect) {
+  const corners = boundsCorners(bounds).map(rotate);
+  const xs = corners.map((p) => p.x);
+  const ys = corners.map((p) => p.y);
+  const minX = Math.min(...xs);
+  const maxX = Math.max(...xs);
+  const minY = Math.min(...ys);
+  const maxY = Math.max(...ys);
+  const scale = Math.min((rect.w - 80) / Math.max(1, maxX - minX), (rect.h - 90) / Math.max(1, maxY - minY));
+  return {
+    centerX: (minX + maxX) / 2,
+    centerY: (minY + maxY) / 2,
+    scale
+  };
+}
+
+function projectPoint(point, projection, rect) {
+  const rotated = rotate(point);
+  return {
+    x: rect.x + rect.w / 2 + (rotated.x - projection.centerX) * projection.scale,
+    y: rect.y + rect.h / 2 + (rotated.y - projection.centerY) * projection.scale,
+    depth: rotated.depth
+  };
+}
+
+function projectSets(trueJoints, predJoints, rect, projection) {
+  const rotated = [];
+  for (const points of [trueJoints, predJoints]) {
+    const next = {};
+    for (const [joint, point] of Object.entries(points)) {
+      next[joint] = projectPoint(point, projection, rect);
+    }
+    rotated.push(next);
+  }
+  return rotated;
+}
+
+function drawBounds(ctx, bounds, projection, rect, label) {
+  const corners = boundsCorners(bounds).map((point) => projectPoint(point, projection, rect));
+  const edges = [
+    [0, 1], [0, 2], [1, 3], [2, 3],
+    [4, 5], [4, 6], [5, 7], [6, 7],
+    [0, 4], [1, 5], [2, 6], [3, 7]
+  ];
+  ctx.strokeStyle = "rgba(24, 32, 38, 0.28)";
+  ctx.lineWidth = 1.4;
+  for (const [a, b] of edges) {
+    ctx.beginPath();
+    ctx.moveTo(corners[a].x, corners[a].y);
+    ctx.lineTo(corners[b].x, corners[b].y);
+    ctx.stroke();
+  }
+  ctx.fillStyle = "rgba(24, 32, 38, 0.72)";
+  ctx.font = "12px Segoe UI, sans-serif";
+  ctx.textAlign = "left";
+  const b = bounds;
+  ctx.fillText(`${label}: X ${fmt(b.min[0], 0)}..${fmt(b.max[0], 0)} / Y ${fmt(b.min[1], 0)}..${fmt(b.max[1], 0)} / Z ${fmt(b.min[2], 0)}..${fmt(b.max[2], 0)} mm`, rect.x + 14, rect.y + rect.h - 14);
+}
+
+function drawSkeleton(ctx, points, color, width) {
+  const links = BONES
+    .filter(([a, b]) => points[a] && points[b])
+    .map(([a, b]) => ({ a, b, depth: (points[a].depth + points[b].depth) / 2 }))
+    .sort((a, b) => a.depth - b.depth);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = width;
+  ctx.lineCap = "round";
+  for (const link of links) {
+    ctx.beginPath();
+    ctx.moveTo(points[link.a].x, points[link.a].y);
+    ctx.lineTo(points[link.b].x, points[link.b].y);
+    ctx.stroke();
+  }
+  const joints = Object.values(points).sort((a, b) => a.depth - b.depth);
+  ctx.fillStyle = color;
+  for (const point of joints) {
+    ctx.beginPath();
+    ctx.arc(point.x, point.y, width + 1.5, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+function drawErrorLinks(ctx, truePoints, predPoints) {
+  ctx.strokeStyle = "rgba(105, 116, 128, 0.5)";
+  ctx.lineWidth = 1;
+  for (const joint of state.data.joints) {
+    if (!truePoints[joint] || !predPoints[joint]) continue;
+    ctx.beginPath();
+    ctx.moveTo(truePoints[joint].x, truePoints[joint].y);
+    ctx.lineTo(predPoints[joint].x, predPoints[joint].y);
+    ctx.stroke();
+  }
+}
+
+function frameError(trueJoints, predJoints) {
+  let sum = 0;
+  let worst = { joint: "-", value: 0 };
+  for (const joint of state.data.joints) {
+    const a = trueJoints[joint];
+    const b = predJoints[joint];
+    const d = Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+    sum += d;
+    if (d > worst.value) worst = { joint, value: d };
+  }
+  return { mean: sum / state.data.joints.length, worst };
+}
+
+function relativeJoints(points) {
+  const origin = points.pelvis || points[state.data.joints[0]];
+  const out = {};
+  for (const [joint, point] of Object.entries(points)) {
+    out[joint] = [point[0] - origin[0], point[1] - origin[1], point[2] - origin[2]];
+  }
+  return out;
+}
+
+function computeRelativeBounds() {
+  const bounds = {
+    min: [Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY],
+    max: [Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY]
+  };
+  for (const row of state.data.frames) {
+    for (const points of [relativeJoints(jointsFromFlat(row.true)), relativeJoints(jointsFromFlat(row.pred))]) {
+      for (const point of Object.values(points)) {
+        for (let axis = 0; axis < 3; axis += 1) {
+          bounds.min[axis] = Math.min(bounds.min[axis], point[axis]);
+          bounds.max[axis] = Math.max(bounds.max[axis], point[axis]);
+        }
+      }
+    }
+  }
+  const padding = 120;
+  return {
+    min: bounds.min.map((value) => value - padding),
+    max: bounds.max.map((value) => value + padding)
+  };
+}
+
+function drawSceneGrid(ctx, rect) {
+  ctx.strokeStyle = "#d8e0e6";
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 8; i += 1) {
+    const y = rect.y + 48 + ((rect.h - 96) * i) / 8;
+    ctx.beginPath();
+    ctx.moveTo(rect.x + 24, y);
+    ctx.lineTo(rect.x + rect.w - 24, y);
+    ctx.stroke();
+  }
+}
+
+function drawSceneTitle(ctx, rect, title) {
+  ctx.fillStyle = "rgba(24, 32, 38, 0.86)";
+  ctx.font = "700 15px Segoe UI, sans-serif";
+  ctx.textAlign = "left";
+  ctx.fillText(title, rect.x + 14, rect.y + 24);
+}
+
+function drawScene(ctx, trueJoints, predJoints, bounds, rect, title, boundsLabel) {
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(rect.x, rect.y, rect.w, rect.h);
+  ctx.clip();
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(rect.x, rect.y, rect.w, rect.h);
+  drawSceneGrid(ctx, rect);
+  const projection = makeProjection(bounds, rect);
+  const [truePoints, predPoints] = projectSets(trueJoints, predJoints, rect, projection);
+  drawBounds(ctx, bounds, projection, rect, boundsLabel);
+  drawErrorLinks(ctx, truePoints, predPoints);
+  drawSkeleton(ctx, truePoints, "#1f5f9f", 4);
+  drawSkeleton(ctx, predPoints, "#d87522", 3);
+  drawSceneTitle(ctx, rect, title);
+  ctx.restore();
+}
+
+function drawMetricsPanel(ctx, rect, row, err, statusText) {
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(rect.x, rect.y, rect.w, rect.h);
+  ctx.strokeStyle = "#d5dde3";
+  ctx.lineWidth = 1;
+  ctx.strokeRect(rect.x + 0.5, rect.y + 0.5, rect.w - 1, rect.h - 1);
+  const items = [
+    ["Model", state.data.name || "-"],
+    ["Trial", row.trial],
+    ["Frame", String(row.frame)],
+    ["Mean Joint Error", `${fmt(err.mean, 1)} mm`],
+    ["Worst Joint", `${err.worst.joint} (${fmt(err.worst.value, 1)} mm)`]
+  ];
+  let y = rect.y + 34;
+  for (const [label, value] of items) {
+    ctx.fillStyle = "#63717b";
+    ctx.font = "700 13px Segoe UI, sans-serif";
+    ctx.fillText(label, rect.x + 16, y);
+    ctx.fillStyle = "#182026";
+    ctx.font = "700 22px Segoe UI, sans-serif";
+    ctx.fillText(value, rect.x + 16, y + 30);
+    y += 82;
+    ctx.strokeStyle = "#d5dde3";
+    ctx.beginPath();
+    ctx.moveTo(rect.x + 16, y - 18);
+    ctx.lineTo(rect.x + rect.w - 16, y - 18);
+    ctx.stroke();
+  }
+  ctx.fillStyle = "#63717b";
+  ctx.font = "13px Segoe UI, sans-serif";
+  ctx.fillText(statusText, rect.x + 16, rect.y + rect.h - 22);
+}
+
+function drawFrame(ctx, width, height, includeMetrics = false) {
+  ctx.clearRect(0, 0, width, height);
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, width, height);
+
+  const row = state.data.frames[state.index];
+  const trueJoints = jointsFromFlat(row.true);
+  const predJoints = jointsFromFlat(row.pred);
+  const relTrueJoints = relativeJoints(trueJoints);
+  const relPredJoints = relativeJoints(predJoints);
+  const panelW = includeMetrics ? Math.max(250, Math.round(width * 0.18)) : 0;
+  const sceneW = width - panelW;
+  const gap = 10;
+  const rightW = Math.max(220, Math.round((sceneW - gap) * 0.3));
+  const leftW = sceneW - gap - rightW;
+  const leftRect = { x: 0, y: 0, w: leftW, h: height };
+  const rightRect = { x: leftW + gap, y: 0, w: rightW, h: height };
+  drawScene(ctx, trueJoints, predJoints, state.data.true_bounds, leftRect, "Global coordinates", "Global bounds");
+  drawScene(ctx, relTrueJoints, relPredJoints, state.data.relative_bounds, rightRect, "Pelvis-relative", "Relative bounds");
+
+  ctx.fillStyle = "#eef2f4";
+  ctx.fillRect(leftW, 0, gap, height);
+
+  const err = frameError(trueJoints, predJoints);
+  if (includeMetrics) {
+    drawMetricsPanel(ctx, { x: sceneW, y: 0, w: panelW, h: height }, row, err, `${state.index + 1} / ${state.data.frames.length}`);
+  }
+  return { row, err };
+}
+
+function render() {
+  if (!state.data) return;
+  const { width, height, scale } = fitCanvas();
+  const ctx = els.canvas.getContext("2d");
+  ctx.setTransform(scale, 0, 0, scale, 0, 0);
+  const { row, err } = drawFrame(ctx, width, height, false);
+
+  els.model.textContent = state.data.name || "-";
+  els.trial.textContent = row.trial;
+  els.frame.textContent = row.frame;
+  els.error.textContent = `${fmt(err.mean, 1)} mm`;
+  els.worst.textContent = `${err.worst.joint} (${fmt(err.worst.value, 1)} mm)`;
+  els.status.textContent = `${state.index + 1} / ${state.data.frames.length}`;
+  els.slider.value = String(state.index);
+}
+
+function videoMimeType() {
+  const candidates = [
+    "video/webm;codecs=vp9",
+    "video/webm;codecs=vp8",
+    "video/webm"
+  ];
+  return candidates.find((type) => window.MediaRecorder && MediaRecorder.isTypeSupported(type)) || "";
+}
+
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 5000);
+}
+
+async function exportVideo() {
+  if (!state.data || !window.MediaRecorder) {
+    els.status.textContent = "このブラウザは動画書き出しに対応していません";
+    return;
+  }
+
+  const previous = {
+    index: state.index,
+    playing: state.playing,
+    yaw: state.yaw,
+    pitch: state.pitch
+  };
+  const fps = 25;
+  const frameMs = 1000 / fps;
+  const chunks = [];
+  const exportCanvas = document.createElement("canvas");
+  exportCanvas.width = 1600;
+  exportCanvas.height = 900;
+  const exportCtx = exportCanvas.getContext("2d");
+  const stream = exportCanvas.captureStream(fps);
+  const mimeType = videoMimeType();
+  const recorder = new MediaRecorder(stream, mimeType ? { mimeType } : undefined);
+
+  state.playing = false;
+  els.export.disabled = true;
+  els.play.disabled = true;
+  els.prev.disabled = true;
+  els.next.disabled = true;
+  els.slider.disabled = true;
+  els.export.textContent = "Exporting";
+
+  recorder.ondataavailable = (event) => {
+    if (event.data && event.data.size > 0) chunks.push(event.data);
+  };
+
+  const finished = new Promise((resolve) => {
+    recorder.onstop = resolve;
+  });
+
+  recorder.start();
+  state.index = 0;
+  render();
+  drawFrame(exportCtx, exportCanvas.width, exportCanvas.height, true);
+
+  let frame = 0;
+  const timer = window.setInterval(() => {
+    frame += 1;
+    if (frame >= state.data.frames.length) {
+      window.clearInterval(timer);
+      recorder.stop();
+      return;
+    }
+    state.index = frame;
+    render();
+    drawFrame(exportCtx, exportCanvas.width, exportCanvas.height, true);
+    els.status.textContent = `書き出し中 ${frame + 1} / ${state.data.frames.length}`;
+  }, frameMs);
+
+  await finished;
+  stream.getTracks().forEach((track) => track.stop());
+  const blob = new Blob(chunks, { type: mimeType || "video/webm" });
+  const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+  const modelName = String(state.data.name || "model").replace(/[^a-zA-Z0-9_-]+/g, "_");
+  downloadBlob(blob, `pir_prediction_${modelName}_${stamp}.webm`);
+
+  state.index = previous.index;
+  state.playing = previous.playing;
+  state.yaw = previous.yaw;
+  state.pitch = previous.pitch;
+  els.export.disabled = false;
+  els.play.disabled = false;
+  els.prev.disabled = false;
+  els.next.disabled = false;
+  els.slider.disabled = false;
+  els.export.textContent = "Export";
+  els.play.textContent = state.playing ? "Pause" : "Play";
+  render();
+}
+
+async function load() {
+  const res = await fetch("viewer_data.json");
+  state.root = await res.json();
+  if (!state.root.models) {
+    state.root = {
+      joints: state.root.joints,
+      true_bounds: state.root.true_bounds,
+      models: [{ name: "model", frames: state.root.frames, coordinate_mode: state.root.coordinate_mode }]
+    };
+  }
+  els.modelSelect.innerHTML = "";
+  state.root.models.forEach((model, index) => {
+    const option = document.createElement("option");
+    option.value = String(index);
+    option.textContent = model.name || `model_${index + 1}`;
+    els.modelSelect.appendChild(option);
+  });
+  setActiveModel(0);
+}
+
+function setActiveModel(index) {
+  state.modelIndex = index;
+  const model = state.root.models[index];
+  state.data = {
+    name: model.name || `model_${index + 1}`,
+    frames: model.frames,
+    coordinate_mode: model.coordinate_mode,
+    joints: state.root.joints,
+    true_bounds: state.root.true_bounds
+  };
+  state.data.relative_bounds = computeRelativeBounds();
+  state.index = clamp(state.index, 0, state.data.frames.length - 1);
+  els.slider.max = String(state.data.frames.length - 1);
+  els.slider.value = String(state.index);
+  els.modelSelect.value = String(index);
+  render();
+}
+
+function step(delta) {
+  state.index = clamp(state.index + delta, 0, state.data.frames.length - 1);
+  render();
+}
+
+function tick(now) {
+  if (state.playing && state.data) {
+    const delta = state.lastTick ? now - state.lastTick : 0;
+    if (delta > 40) {
+      state.index = (state.index + 1) % state.data.frames.length;
+      state.lastTick = now;
+      render();
+    }
+  } else {
+    state.lastTick = now;
+  }
+  requestAnimationFrame(tick);
+}
+
+els.slider.addEventListener("input", () => {
+  state.index = Number(els.slider.value);
+  render();
+});
+els.modelSelect.addEventListener("change", () => {
+  setActiveModel(Number(els.modelSelect.value));
+});
+els.prev.addEventListener("click", () => step(-1));
+els.next.addEventListener("click", () => step(1));
+els.play.addEventListener("click", () => {
+  state.playing = !state.playing;
+  els.play.textContent = state.playing ? "Pause" : "Play";
+});
+els.export.addEventListener("click", exportVideo);
+els.canvas.addEventListener("pointerdown", (event) => {
+  state.drag = { x: event.clientX, y: event.clientY, yaw: state.yaw, pitch: state.pitch };
+  els.canvas.setPointerCapture?.(event.pointerId);
+});
+els.canvas.addEventListener("pointermove", (event) => {
+  if (!state.drag) return;
+  state.yaw = state.drag.yaw + (event.clientX - state.drag.x) * 0.01;
+  state.pitch = clamp(state.drag.pitch + (event.clientY - state.drag.y) * 0.006, -0.9, 0.9);
+  render();
+});
+window.addEventListener("pointerup", () => { state.drag = null; });
+window.addEventListener("resize", render);
+
+load().catch((error) => {
+  els.status.textContent = `読み込み失敗: ${error.message}`;
+});
+requestAnimationFrame(tick);
+"""
+
+
+def detect_prefixes(header):
+    if any(name.startswith("true_global_") for name in header):
+        return "true_global_", "pred_global_"
+    if any(name.startswith("true_local_") for name in header):
+        return "true_local_", "pred_local_"
+    raise ValueError("Prediction CSV must contain true_global_/pred_global_ or true_local_/pred_local_ columns")
+
+
+def parse_joint_names(header, true_prefix):
+    joints = []
+    for name in header:
+        if not name.startswith(true_prefix) or not name.endswith("_X [mm]"):
+            continue
+        joint = name.removeprefix(true_prefix).removesuffix("_X [mm]")
+        joints.append(joint)
+    return joints
+
+
+def build_viewer_data(input_csv):
+    with Path(input_csv).open("r", encoding="utf-8-sig", newline="") as handle:
+        reader = csv.DictReader(handle)
+        true_prefix, pred_prefix = detect_prefixes(reader.fieldnames or [])
+        joints = parse_joint_names(reader.fieldnames or [], true_prefix)
+        frames = []
+        true_bounds = {
+            "min": [float("inf"), float("inf"), float("inf")],
+            "max": [float("-inf"), float("-inf"), float("-inf")],
+        }
+        for row in reader:
+            true = []
+            pred = []
+            for joint in joints:
+                for axis in ("X", "Y", "Z"):
+                    suffix = f"{joint}_{axis} [mm]"
+                    true_value = float(row[f"{true_prefix}{suffix}"])
+                    true.append(round(true_value, 3))
+                    pred.append(round(float(row[f"{pred_prefix}{suffix}"]), 3))
+                    axis_idx = {"X": 0, "Y": 1, "Z": 2}[axis]
+                    true_bounds["min"][axis_idx] = min(true_bounds["min"][axis_idx], true_value)
+                    true_bounds["max"][axis_idx] = max(true_bounds["max"][axis_idx], true_value)
+            frames.append(
+                {
+                    "trial": row["trial"],
+                    "frame": int(float(row["Frame"])),
+                    "true": true,
+                    "pred": pred,
+                }
+            )
+    if not frames:
+        raise ValueError(f"No frames found in {input_csv}")
+    padding = 150.0
+    true_bounds = {
+        "min": [round(value - padding, 3) for value in true_bounds["min"]],
+        "max": [round(value + padding, 3) for value in true_bounds["max"]],
+    }
+    return {
+        "joints": joints,
+        "frames": frames,
+        "coordinate_mode": true_prefix.strip("_"),
+        "true_bounds": true_bounds,
+    }
+
+
+def parse_model_spec(spec):
+    if "=" not in spec:
+        path = Path(spec)
+        return path.stem, spec
+    name, path = spec.split("=", 1)
+    return name, path
+
+
+def merge_bounds(bounds_list):
+    return {
+        "min": [min(bounds["min"][axis] for bounds in bounds_list) for axis in range(3)],
+        "max": [max(bounds["max"][axis] for bounds in bounds_list) for axis in range(3)],
+    }
+
+
+def build_multi_viewer_data(model_specs):
+    models = []
+    bounds = []
+    joints = None
+    for spec in model_specs:
+        name, path = parse_model_spec(spec)
+        data = build_viewer_data(path)
+        if joints is None:
+            joints = data["joints"]
+        elif joints != data["joints"]:
+            raise ValueError(f"Joint layout differs for {name}")
+        bounds.append(data["true_bounds"])
+        models.append(
+            {
+                "name": name,
+                "frames": data["frames"],
+                "coordinate_mode": data["coordinate_mode"],
+            }
+        )
+    if not models:
+        raise ValueError("No models specified.")
+    return {
+        "joints": joints,
+        "models": models,
+        "true_bounds": merge_bounds(bounds),
+    }
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Create an interactive 3D prediction viewer.")
+    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Prediction CSV with true/pred coordinate columns.")
+    parser.add_argument(
+        "--model",
+        action="append",
+        default=None,
+        help="Named model prediction as name=path. May be supplied multiple times.",
+    )
+    parser.add_argument("--output-dir", default=str(DEFAULT_OUTPUT), help="Directory for viewer files.")
+    args = parser.parse_args()
+
+    out_dir = Path(args.output_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    data = build_multi_viewer_data(args.model) if args.model else build_viewer_data(args.input)
+    (out_dir / "viewer_data.json").write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+    (out_dir / "index.html").write_text(HTML, encoding="utf-8")
+    (out_dir / "styles.css").write_text(CSS, encoding="utf-8")
+    (out_dir / "app.js").write_text(JS, encoding="utf-8")
+    if "models" in data:
+        summary = {
+            "output_dir": str(out_dir),
+            "models": [{"name": model["name"], "frames": len(model["frames"])} for model in data["models"]],
+            "joints": len(data["joints"]),
+        }
+    else:
+        summary = {"output_dir": str(out_dir), "frames": len(data["frames"]), "joints": len(data["joints"])}
+    print(json.dumps(summary, indent=2))
+
+
+if __name__ == "__main__":
+    main()
