@@ -1,21 +1,21 @@
-# PIR Sequence Model
+# PIR時系列モデル
 
-## Summary
+## 概要
 
-- Model: gru
-- Device: cuda
-- Train trials: 002, 003, 004
-- Validation trials/frames: 2915
-- Test trials: 005
-- Context: 6.0 sec (151 frames)
-- Test RMSE: 266.6 mm
-- Test MAE: 158.6 mm
-- Test mean joint error: 365.2 mm
-- Test R2: 0.954
+- モデル: gru
+- 実行デバイス: cuda
+- 学習trial: 002, 003, 004
+- 検証フレーム数: 2915
+- テストtrial: 005
+- 文脈長: 6.0秒 (151フレーム)
+- テストRMSE: 266.6 mm
+- テストMAE: 158.6 mm
+- テスト平均関節誤差: 365.2 mm
+- テストR2: 0.954
 
-## Joint RMSE
+## 関節別RMSE
 
-| joint | RMSE [mm] |
+| 関節 | RMSE [mm] |
 |---|---:|
 | abdomen | 437.9 |
 | head | 443.5 |

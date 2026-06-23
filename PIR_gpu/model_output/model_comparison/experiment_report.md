@@ -1,45 +1,45 @@
-# PIR to Theia3D Model Comparison
+# PIRからTheia3D骨格座標を推定するモデル比較
 
-## Experimental Setup
+## 実験設定
 
-- Input: 25 Hz aligned PIR features generated from five PIR modules.
-- Target: 19 Theia3D global joints, XYZ coordinates, 57 regression targets.
-- Split: trials 002, 003, and 004 for training; trial 005 for held-out testing.
-- Metrics: coordinate RMSE/MAE over all XYZ values, frame mean joint error, 95th percentile frame mean joint error, and global R2.
+- 入力: 5台のPIRモジュールから作成した25Hz整列済みPIR特徴量。
+- 教師: Theia3Dのglobal joint座標。19関節のXYZ、合計57次元を予測対象とした。
+- 分割: trial 002, 003, 004を学習に使用し、trial 005を未使用テストに使用した。
+- 評価指標: 全XYZ座標のRMSE/MAE、フレームごとの平均関節誤差、その95パーセンタイル、global R2。
 
-## Summary
+## 概要
 
-- Best model: Ensemble_TCN2_TCN4_TCN6_GRU6
-- Best RMSE: 240.1 mm
-- Best mean joint error: 312.4 mm
-- RMSE reduction from Ridge baseline: 79.7%
+- 最良モデル: Ensemble_TCN2_TCN4_TCN6_GRU6
+- 最良RMSE: 240.1 mm
+- 最良平均関節誤差: 312.4 mm
+- RidgeベースラインからのRMSE削減率: 79.7%
 
-## Results
+## 結果
 
-| Rank | Model | Type | Context [s] | Test rows | RMSE [mm] | MAE [mm] | Mean joint error [mm] | P95 mean joint error [mm] | R2 |
+| 順位 | モデル | 種類 | 文脈長 [s] | テスト行数 | RMSE [mm] | MAE [mm] | 平均関節誤差 [mm] | P95平均関節誤差 [mm] | R2 |
 |---:|---|---|---:|---:|---:|---:|---:|---:|---:|
-| 1 | Ensemble_TCN2_TCN4_TCN6_GRU6 | prediction_average_ensemble |  | 6613 | 240.1 | 138.0 | 312.4 | 873.0 | 0.963 |
-| 2 | Ensemble_TCN2_TCN4_TCN6_GRU6_MLP2 | prediction_average_ensemble |  | 6613 | 240.8 | 138.1 | 313.4 | 879.4 | 0.963 |
-| 3 | Ensemble_TCN4_TCN6_GRU6 | prediction_average_ensemble |  | 6613 | 244.7 | 142.4 | 322.7 | 866.3 | 0.961 |
-| 4 | Ensemble_TCN4_GRU6 | prediction_average_ensemble |  | 6613 | 247.3 | 145.0 | 330.2 | 886.1 | 0.960 |
-| 5 | TCN_4s | tcn | 4.0 | 6663 | 260.5 | 153.4 | 347.9 | 901.2 | 0.957 |
-| 6 | GRU_6s | gru | 6.0 | 6613 | 266.6 | 158.6 | 365.2 | 916.3 | 0.954 |
-| 7 | TCN_2s | tcn | 2.0 | 6713 | 267.8 | 156.2 | 357.3 | 971.1 | 0.954 |
-| 8 | TCN_6s | tcn | 6.0 | 6613 | 269.6 | 156.5 | 355.3 | 934.9 | 0.953 |
-| 9 | GRU_4s | gru | 4.0 | 6663 | 289.0 | 177.2 | 409.7 | 932.1 | 0.946 |
-| 10 | MLP_2s | mlp | 2.0 | 6713 | 293.8 | 169.7 | 389.0 | 1054.8 | 0.945 |
-| 11 | Transformer_4s | transformer | 4.0 | 6663 | 338.7 | 199.7 | 459.0 | 1182.2 | 0.927 |
-| 12 | ConvTransformer_4s | convtransformer | 4.0 | 6663 | 355.0 | 209.5 | 482.9 | 1294.0 | 0.919 |
-| 13 | MLP_4s | mlp | 4.0 | 6663 | 409.0 | 233.0 | 532.0 | 1459.6 | 0.893 |
-| 14 | Ridge | ridge_regression |  | 6763 | 1184.1 | 829.7 | 1889.9 | 3219.5 | 0.103 |
+| 1 | Ensemble_TCN2_TCN4_TCN6_GRU6 | 予測平均アンサンブル |  | 6613 | 240.1 | 138.0 | 312.4 | 873.0 | 0.963 |
+| 2 | Ensemble_TCN2_TCN4_TCN6_GRU6_MLP2 | 予測平均アンサンブル |  | 6613 | 240.8 | 138.1 | 313.4 | 879.4 | 0.963 |
+| 3 | Ensemble_TCN4_TCN6_GRU6 | 予測平均アンサンブル |  | 6613 | 244.7 | 142.4 | 322.7 | 866.3 | 0.961 |
+| 4 | Ensemble_TCN4_GRU6 | 予測平均アンサンブル |  | 6613 | 247.3 | 145.0 | 330.2 | 886.1 | 0.960 |
+| 5 | TCN_4s | TCN | 4.0 | 6663 | 260.5 | 153.4 | 347.9 | 901.2 | 0.957 |
+| 6 | GRU_6s | GRU | 6.0 | 6613 | 266.6 | 158.6 | 365.2 | 916.3 | 0.954 |
+| 7 | TCN_2s | TCN | 2.0 | 6713 | 267.8 | 156.2 | 357.3 | 971.1 | 0.954 |
+| 8 | TCN_6s | TCN | 6.0 | 6613 | 269.6 | 156.5 | 355.3 | 934.9 | 0.953 |
+| 9 | GRU_4s | GRU | 4.0 | 6663 | 289.0 | 177.2 | 409.7 | 932.1 | 0.946 |
+| 10 | MLP_2s | MLP | 2.0 | 6713 | 293.8 | 169.7 | 389.0 | 1054.8 | 0.945 |
+| 11 | Transformer_4s | Transformer | 4.0 | 6663 | 338.7 | 199.7 | 459.0 | 1182.2 | 0.927 |
+| 12 | ConvTransformer_4s | ConvTransformer | 4.0 | 6663 | 355.0 | 209.5 | 482.9 | 1294.0 | 0.919 |
+| 13 | MLP_4s | MLP | 4.0 | 6663 | 409.0 | 233.0 | 532.0 | 1459.6 | 0.893 |
+| 14 | Ridge | Ridge回帰 |  | 6763 | 1184.1 | 829.7 | 1889.9 | 3219.5 | 0.103 |
 
-## Interpretation
+## 解釈
 
-- TCN variants were the strongest single models, suggesting that local temporal convolution is well matched to the PIR signal.
-- GRU improved when context was extended to 6 seconds, but its frame mean joint error remained higher than the best TCN.
-- Transformer-only variants overfit more easily on the current four-trial dataset.
-- The best result came from averaging complementary TCN and GRU predictions.
+- 単体モデルではTCN系が最も強く、PIR信号には局所的な時間畳み込みがよく合っていると考えられる。
+- GRUは文脈長を6秒へ伸ばすと改善したが、フレーム平均関節誤差では最良TCNより大きかった。
+- Transformer単体やConvTransformerは、現状の4 trial規模では過学習しやすい傾向があった。
+- 最良結果は、TCNとGRUの予測を平均することで得られた。誤差傾向の違いが相補的に働いた可能性がある。
 
-## Caveat
+## 注意点
 
-This comparison uses a single held-out trial. A publication-ready claim should add trial-wise cross-validation and more recording sessions.
+この比較は単一の未使用テストtrialに基づく。論文として強い主張を行うには、trial単位の交差検証と、別日・別条件での追加収録が必要である。

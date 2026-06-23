@@ -1,21 +1,21 @@
-# PIR Sequence Model
+# PIR時系列モデル
 
-## Summary
+## 概要
 
-- Model: convtransformer
-- Device: cuda
-- Train trials: 002, 003, 004
-- Validation trials/frames: 2915
-- Test trials: 005
-- Context: 4.0 sec (101 frames)
-- Test RMSE: 355.0 mm
-- Test MAE: 209.5 mm
-- Test mean joint error: 482.9 mm
-- Test R2: 0.919
+- モデル: convtransformer
+- 実行デバイス: cuda
+- 学習trial: 002, 003, 004
+- 検証フレーム数: 2915
+- テストtrial: 005
+- 文脈長: 4.0秒 (101フレーム)
+- テストRMSE: 355.0 mm
+- テストMAE: 209.5 mm
+- テスト平均関節誤差: 482.9 mm
+- テストR2: 0.919
 
-## Joint RMSE
+## 関節別RMSE
 
-| joint | RMSE [mm] |
+| 関節 | RMSE [mm] |
 |---|---:|
 | abdomen | 599.2 |
 | head | 605.3 |

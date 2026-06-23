@@ -424,28 +424,30 @@ def write_aligned_dataset(path, trials):
 
 
 def write_report(path, metrics):
+    mean_joint_error = metrics["test"].get("mean_joint_error_mm")
+    preprocessing = metrics.get("preprocessing", {})
     lines = [
-        "# 20260623 PIR to Global Bone Model",
+        "# 20260623 PIRからTheia3D Global Bone座標を推定するモデル",
         "",
-        "## Summary",
+        "## 概要",
         "",
-        f"- Train trials: {', '.join(metrics['train_trials'])}",
-        f"- Test trials: {', '.join(metrics['test_trials'])}",
-        f"- Feature count: {metrics['feature_count']}",
-        f"- Target count: {metrics['target_count']} global coordinate values",
+        f"- 学習trial: {', '.join(metrics['train_trials'])}",
+        f"- テストtrial: {', '.join(metrics['test_trials'])}",
+        f"- 特徴量数: {metrics['feature_count']}",
+        f"- 予測対象数: {metrics['target_count']}個のglobal座標値",
         f"- Ridge alpha: {metrics['model']['alpha']}",
-        f"- Test RMSE: {metrics['test']['rmse_mm']:.1f} mm",
-        f"- Test MAE: {metrics['test']['mae_mm']:.1f} mm",
-        f"- Test mean joint error: {metrics['test']['mean_joint_error_mm']:.1f} mm",
-        f"- Test R2: {metrics['test']['r2_global']:.3f}",
-        f"- Sync mode: {metrics['preprocessing']['sync_mode']}",
-        f"- PIR time source: {metrics['preprocessing']['pir_time_source']}",
+        f"- テストRMSE: {metrics['test']['rmse_mm']:.1f} mm",
+        f"- テストMAE: {metrics['test']['mae_mm']:.1f} mm",
+        f"- テスト平均関節誤差: {mean_joint_error:.1f} mm" if mean_joint_error is not None else "- テスト平均関節誤差: 未算出",
+        f"- テストR2: {metrics['test']['r2_global']:.3f}",
+        f"- 同期モード: {preprocessing.get('sync_mode', '未記録')}",
+        f"- PIR時刻ソース: {preprocessing.get('pir_time_source', '未記録')}",
         "",
-        "Targets are Theia global joint coordinates. `worldbody` is not predicted.",
+        "予測対象はTheiaのglobal joint座標です。`worldbody` は予測対象から除外しています。",
         "",
-        "## Joint RMSE",
+        "## 関節別RMSE",
         "",
-        "| joint | RMSE [mm] |",
+        "| 関節 | RMSE [mm] |",
         "|---|---:|",
     ]
     for row in metrics["joint_test_rmse"]:
@@ -453,13 +455,13 @@ def write_report(path, metrics):
     lines.extend(
         [
             "",
-            "## Files",
+            "## 出力ファイル",
             "",
-            "- `pir_to_global_bones_ridge_model.npz`: model parameters and metadata",
-            "- `test_predictions.csv`: held-out trial predictions",
-            "- `test_frame_errors.csv`: held-out frame mean joint errors",
-            "- `aligned_dataset.npz`: 25 Hz aligned features and targets",
-            "- `metrics.json`: full metrics",
+            "- `pir_to_global_bones_ridge_model.npz`: モデルパラメータとメタデータ",
+            "- `test_predictions.csv`: 未使用テストtrialの予測結果",
+            "- `test_frame_errors.csv`: 未使用テストframeごとの平均関節誤差",
+            "- `aligned_dataset.npz`: 25Hzに整列した特徴量と教師座標",
+            "- `metrics.json`: 全評価指標",
         ]
     )
     Path(path).write_text("\n".join(lines), encoding="utf-8")

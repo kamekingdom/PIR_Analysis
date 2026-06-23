@@ -1,24 +1,24 @@
-# 20260623 PIR to Global Bone Model
+# 20260623 PIRからTheia3D Global Bone座標を推定するモデル
 
-## Summary
+## 概要
 
-- Train trials: 002, 003, 004
-- Test trials: 005
-- Feature count: 375
-- Target count: 57 global coordinate values
+- 学習trial: 002, 003, 004
+- テストtrial: 005
+- 特徴量数: 375
+- 予測対象数: 57個のglobal座標値
 - Ridge alpha: 10000.0
-- Test RMSE: 1244.5 mm
-- Test MAE: 905.5 mm
-- Test mean joint error: 2037.8 mm
-- Test R2: 0.010
-- Sync mode: correlation
-- PIR time source: timestamp_unix
+- テストRMSE: 1244.5 mm
+- テストMAE: 905.5 mm
+- テスト平均関節誤差: 2037.8 mm
+- テストR2: 0.010
+- 同期モード: correlation
+- PIR時刻ソース: timestamp_unix
 
-Targets are Theia global joint coordinates. `worldbody` is not predicted.
+予測対象はTheiaのglobal joint座標です。`worldbody` は予測対象から除外しています。
 
-## Joint RMSE
+## 関節別RMSE
 
-| joint | RMSE [mm] |
+| 関節 | RMSE [mm] |
 |---|---:|
 | abdomen | 2149.9 |
 | head | 2141.2 |
@@ -40,10 +40,10 @@ Targets are Theia global joint coordinates. `worldbody` is not predicted.
 | r_uarm | 2146.0 |
 | thorax | 2142.4 |
 
-## Files
+## 出力ファイル
 
-- `pir_to_global_bones_ridge_model.npz`: model parameters and metadata
-- `test_predictions.csv`: held-out trial predictions
-- `test_frame_errors.csv`: held-out frame mean joint errors
-- `aligned_dataset.npz`: 25 Hz aligned features and targets
-- `metrics.json`: full metrics
+- `pir_to_global_bones_ridge_model.npz`: モデルパラメータとメタデータ
+- `test_predictions.csv`: 未使用テストtrialの予測結果
+- `test_frame_errors.csv`: 未使用テストframeごとの平均関節誤差
+- `aligned_dataset.npz`: 25Hzに整列した特徴量と教師座標
+- `metrics.json`: 全評価指標

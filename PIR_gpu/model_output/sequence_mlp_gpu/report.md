@@ -1,21 +1,21 @@
-# PIR Sequence Model
+# PIR時系列モデル
 
-## Summary
+## 概要
 
-- Model: mlp
-- Device: cuda
-- Train trials: 002, 003, 004
-- Validation trials/frames: 2915
-- Test trials: 005
-- Context: 2.0 sec (51 frames)
-- Test RMSE: 293.8 mm
-- Test MAE: 169.7 mm
-- Test mean joint error: 389.0 mm
-- Test R2: 0.945
+- モデル: mlp
+- 実行デバイス: cuda
+- 学習trial: 002, 003, 004
+- 検証フレーム数: 2915
+- テストtrial: 005
+- 文脈長: 2.0秒 (51フレーム)
+- テストRMSE: 293.8 mm
+- テストMAE: 169.7 mm
+- テスト平均関節誤差: 389.0 mm
+- テストR2: 0.945
 
-## Joint RMSE
+## 関節別RMSE
 
-| joint | RMSE [mm] |
+| 関節 | RMSE [mm] |
 |---|---:|
 | abdomen | 482.1 |
 | head | 494.0 |

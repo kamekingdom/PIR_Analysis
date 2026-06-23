@@ -64,53 +64,63 @@ def write_csv(path, rows):
 def write_report(path, rows):
     best = rows[0]
     baseline = next((row for row in rows if row["name"].lower() == "ridge"), None)
+    type_labels = {
+        "prediction_average_ensemble": "予測平均アンサンブル",
+        "ridge_regression": "Ridge回帰",
+        "tcn": "TCN",
+        "gru": "GRU",
+        "mlp": "MLP",
+        "transformer": "Transformer",
+        "convtransformer": "ConvTransformer",
+    }
     lines = [
-        "# PIR to Theia3D Model Comparison",
+        "# PIRからTheia3D骨格座標を推定するモデル比較",
         "",
-        "## Experimental Setup",
+        "## 実験設定",
         "",
-        "- Input: 25 Hz aligned PIR features generated from five PIR modules.",
-        "- Target: 19 Theia3D global joints, XYZ coordinates, 57 regression targets.",
-        "- Split: trials 002, 003, and 004 for training; trial 005 for held-out testing.",
-        "- Metrics: coordinate RMSE/MAE over all XYZ values, frame mean joint error, 95th percentile frame mean joint error, and global R2.",
+        "- 入力: 5台のPIRモジュールから作成した25Hz整列済みPIR特徴量。",
+        "- 教師: Theia3Dのglobal joint座標。19関節のXYZ、合計57次元を予測対象とした。",
+        "- 分割: trial 002, 003, 004を学習に使用し、trial 005を未使用テストに使用した。",
+        "- 評価指標: 全XYZ座標のRMSE/MAE、フレームごとの平均関節誤差、その95パーセンタイル、global R2。",
         "",
-        "## Summary",
+        "## 概要",
         "",
-        f"- Best model: {best['name']}",
-        f"- Best RMSE: {best['rmse_mm']:.1f} mm",
-        f"- Best mean joint error: {best['mean_joint_error_mm']:.1f} mm",
+        f"- 最良モデル: {best['name']}",
+        f"- 最良RMSE: {best['rmse_mm']:.1f} mm",
+        f"- 最良平均関節誤差: {best['mean_joint_error_mm']:.1f} mm",
     ]
     if baseline:
         improvement = 100.0 * (baseline["rmse_mm"] - best["rmse_mm"]) / baseline["rmse_mm"]
-        lines.append(f"- RMSE reduction from Ridge baseline: {improvement:.1f}%")
+        lines.append(f"- RidgeベースラインからのRMSE削減率: {improvement:.1f}%")
     lines.extend(
         [
             "",
-            "## Results",
+            "## 結果",
             "",
-            "| Rank | Model | Type | Context [s] | Test rows | RMSE [mm] | MAE [mm] | Mean joint error [mm] | P95 mean joint error [mm] | R2 |",
+            "| 順位 | モデル | 種類 | 文脈長 [s] | テスト行数 | RMSE [mm] | MAE [mm] | 平均関節誤差 [mm] | P95平均関節誤差 [mm] | R2 |",
             "|---:|---|---|---:|---:|---:|---:|---:|---:|---:|",
         ]
     )
     for rank, row in enumerate(rows, start=1):
+        type_label = type_labels.get(row["type"], row["type"])
         lines.append(
-            f"| {rank} | {row['name']} | {row['type']} | {row['context_sec']} | {row['test_rows']} | "
+            f"| {rank} | {row['name']} | {type_label} | {row['context_sec']} | {row['test_rows']} | "
             f"{row['rmse_mm']:.1f} | {row['mae_mm']:.1f} | {row['mean_joint_error_mm']:.1f} | "
             f"{row['p95_mean_joint_error_mm']:.1f} | {row['r2_global']:.3f} |"
         )
     lines.extend(
         [
             "",
-            "## Interpretation",
+            "## 解釈",
             "",
-            "- TCN variants were the strongest single models, suggesting that local temporal convolution is well matched to the PIR signal.",
-            "- GRU improved when context was extended to 6 seconds, but its frame mean joint error remained higher than the best TCN.",
-            "- Transformer-only variants overfit more easily on the current four-trial dataset.",
-            "- The best result came from averaging complementary TCN and GRU predictions.",
+            "- 単体モデルではTCN系が最も強く、PIR信号には局所的な時間畳み込みがよく合っていると考えられる。",
+            "- GRUは文脈長を6秒へ伸ばすと改善したが、フレーム平均関節誤差では最良TCNより大きかった。",
+            "- Transformer単体やConvTransformerは、現状の4 trial規模では過学習しやすい傾向があった。",
+            "- 最良結果は、TCNとGRUの予測を平均することで得られた。誤差傾向の違いが相補的に働いた可能性がある。",
             "",
-            "## Caveat",
+            "## 注意点",
             "",
-            "This comparison uses a single held-out trial. A publication-ready claim should add trial-wise cross-validation and more recording sessions.",
+            "この比較は単一の未使用テストtrialに基づく。論文として強い主張を行うには、trial単位の交差検証と、別日・別条件での追加収録が必要である。",
         ]
     )
     Path(path).write_text("\n".join(lines), encoding="utf-8")

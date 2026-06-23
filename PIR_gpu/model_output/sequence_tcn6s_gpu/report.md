@@ -1,21 +1,21 @@
-# PIR Sequence Model
+# PIR時系列モデル
 
-## Summary
+## 概要
 
-- Model: tcn
-- Device: cuda
-- Train trials: 002, 003, 004
-- Validation trials/frames: 2915
-- Test trials: 005
-- Context: 6.0 sec (151 frames)
-- Test RMSE: 269.6 mm
-- Test MAE: 156.5 mm
-- Test mean joint error: 355.3 mm
-- Test R2: 0.953
+- モデル: tcn
+- 実行デバイス: cuda
+- 学習trial: 002, 003, 004
+- 検証フレーム数: 2915
+- テストtrial: 005
+- 文脈長: 6.0秒 (151フレーム)
+- テストRMSE: 269.6 mm
+- テストMAE: 156.5 mm
+- テスト平均関節誤差: 355.3 mm
+- テストR2: 0.953
 
-## Joint RMSE
+## 関節別RMSE
 
-| joint | RMSE [mm] |
+| 関節 | RMSE [mm] |
 |---|---:|
 | abdomen | 444.8 |
 | head | 449.4 |
