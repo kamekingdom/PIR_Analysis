@@ -1,0 +1,218 @@
+[
+  {
+    "name": "Ensemble_TCN2_TCN4_Conv2",
+    "dir": "PIR_gpu_mixed/model_output/ensemble_tcn2_tcn4_conv2",
+    "type": "prediction_average_ensemble",
+    "context_sec": "",
+    "seq_len": "",
+    "members": "tcn2+tcn4+conv2",
+    "train_trials": [],
+    "test_trials": [],
+    "test_rows": 13638,
+    "rmse_mm": 301.3660745527403,
+    "mae_mm": 171.15791756290042,
+    "mean_joint_error_mm": 389.70229339878705,
+    "p95_mean_joint_error_mm": 1110.3776680849278,
+    "r2_global": 0.9295794562625057
+  },
+  {
+    "name": "Weighted_TCN4_TCN2_Conv2",
+    "dir": "PIR_gpu_mixed/model_output/ensemble_weighted_tcn4_tcn2_conv2",
+    "type": "prediction_average_ensemble",
+    "context_sec": "",
+    "seq_len": "",
+    "members": "tcn4+tcn2+conv2",
+    "train_trials": [],
+    "test_trials": [],
+    "test_rows": 13638,
+    "rmse_mm": 302.80755862293364,
+    "mae_mm": 172.30673808153458,
+    "mean_joint_error_mm": 392.1415673384733,
+    "p95_mean_joint_error_mm": 1127.4452435808003,
+    "r2_global": 0.9289041787815107
+  },
+  {
+    "name": "Ensemble_TCN2_TCN4_Conv2_GRU2",
+    "dir": "PIR_gpu_mixed/model_output/ensemble_tcn2_tcn4_conv2_gru2",
+    "type": "prediction_average_ensemble",
+    "context_sec": "",
+    "seq_len": "",
+    "members": "tcn2+tcn4+conv2+gru2",
+    "train_trials": [],
+    "test_trials": [],
+    "test_rows": 13638,
+    "rmse_mm": 304.6106573471802,
+    "mae_mm": 173.43969071239093,
+    "mean_joint_error_mm": 396.0744440289495,
+    "p95_mean_joint_error_mm": 1122.8873483042296,
+    "r2_global": 0.9280549631696063
+  },
+  {
+    "name": "TCN_4s",
+    "dir": "PIR_gpu_mixed/model_output/sequence_tcn4s_gpu",
+    "type": "tcn",
+    "context_sec": 4.0,
+    "seq_len": 101,
+    "members": "",
+    "train_trials": [
+      "rw_002",
+      "rw_003",
+      "rw_004",
+      "sit_003",
+      "sit_004",
+      "sit_005",
+      "sit_006",
+      "sit_007"
+    ],
+    "test_trials": [
+      "rw_005",
+      "sit_008"
+    ],
+    "test_rows": 13638,
+    "rmse_mm": 318.4562072753906,
+    "mae_mm": 182.42501831054688,
+    "mean_joint_error_mm": 415.1469421386719,
+    "p95_mean_joint_error_mm": 1178.1888427734375,
+    "r2_global": 0.9213660520965765
+  },
+  {
+    "name": "TCN_2s",
+    "dir": "PIR_gpu_mixed/model_output/sequence_tcn2s_gpu",
+    "type": "tcn",
+    "context_sec": 2.0,
+    "seq_len": 51,
+    "members": "",
+    "train_trials": [
+      "rw_002",
+      "rw_003",
+      "rw_004",
+      "sit_003",
+      "sit_004",
+      "sit_005",
+      "sit_006",
+      "sit_007"
+    ],
+    "test_trials": [
+      "rw_005",
+      "sit_008"
+    ],
+    "test_rows": 13738,
+    "rmse_mm": 321.8304748535156,
+    "mae_mm": 183.45994567871094,
+    "mean_joint_error_mm": 418.41339111328125,
+    "p95_mean_joint_error_mm": 1164.212158203125,
+    "r2_global": 0.9198144670002907
+  },
+  {
+    "name": "ConvTransformer_2s",
+    "dir": "PIR_gpu_mixed/model_output/sequence_convtransformer2s_gpu",
+    "type": "convtransformer",
+    "context_sec": 2.0,
+    "seq_len": 51,
+    "members": "",
+    "train_trials": [
+      "rw_002",
+      "rw_003",
+      "rw_004",
+      "sit_003",
+      "sit_004",
+      "sit_005",
+      "sit_006",
+      "sit_007"
+    ],
+    "test_trials": [
+      "rw_005",
+      "sit_008"
+    ],
+    "test_rows": 13738,
+    "rmse_mm": 326.7212829589844,
+    "mae_mm": 186.93948364257812,
+    "mean_joint_error_mm": 427.65423583984375,
+    "p95_mean_joint_error_mm": 1184.8443603515625,
+    "r2_global": 0.917358823628887
+  },
+  {
+    "name": "GRU_2s",
+    "dir": "PIR_gpu_mixed/model_output/sequence_gru2s_gpu",
+    "type": "gru",
+    "context_sec": 2.0,
+    "seq_len": 51,
+    "members": "",
+    "train_trials": [
+      "rw_002",
+      "rw_003",
+      "rw_004",
+      "sit_003",
+      "sit_004",
+      "sit_005",
+      "sit_006",
+      "sit_007"
+    ],
+    "test_trials": [
+      "rw_005",
+      "sit_008"
+    ],
+    "test_rows": 13738,
+    "rmse_mm": 374.738525390625,
+    "mae_mm": 223.2268524169922,
+    "mean_joint_error_mm": 515.2634887695312,
+    "p95_mean_joint_error_mm": 1321.7130126953125,
+    "r2_global": 0.891282776224527
+  },
+  {
+    "name": "MLP_2s",
+    "dir": "PIR_gpu_mixed/model_output/sequence_mlp2s_gpu",
+    "type": "mlp",
+    "context_sec": 2.0,
+    "seq_len": 51,
+    "members": "",
+    "train_trials": [
+      "rw_002",
+      "rw_003",
+      "rw_004",
+      "sit_003",
+      "sit_004",
+      "sit_005",
+      "sit_006",
+      "sit_007"
+    ],
+    "test_trials": [
+      "rw_005",
+      "sit_008"
+    ],
+    "test_rows": 13738,
+    "rmse_mm": 377.12066650390625,
+    "mae_mm": 225.14544677734375,
+    "mean_joint_error_mm": 514.2413940429688,
+    "p95_mean_joint_error_mm": 1311.2979736328125,
+    "r2_global": 0.8898961891711507
+  },
+  {
+    "name": "Ridge",
+    "dir": "PIR_gpu_mixed/model_output/baseline_ridge",
+    "type": "ridge_regression",
+    "context_sec": "",
+    "seq_len": "",
+    "members": "",
+    "train_trials": [
+      "rw_002",
+      "rw_003",
+      "rw_004",
+      "sit_003",
+      "sit_004",
+      "sit_005",
+      "sit_006",
+      "sit_007"
+    ],
+    "test_trials": [
+      "rw_005",
+      "sit_008"
+    ],
+    "test_rows": 13838,
+    "rmse_mm": 1126.6147227556744,
+    "mae_mm": 820.9186752159342,
+    "mean_joint_error_mm": 1812.6891207654207,
+    "p95_mean_joint_error_mm": 2865.1956246037525,
+    "r2_global": 0.014567380021284548
+  }
+]

@@ -62,9 +62,21 @@ def joint_indices(target_names):
 
 
 def read_skeleton_trial(trial_dir):
-    trial_id = trial_dir.name.split("_", 1)[0]
+    name_parts = trial_dir.name.split("_")
+    if name_parts and name_parts[0].isdigit():
+        source_label = ""
+        skeleton_stem = name_parts[0]
+        trial_id = skeleton_stem
+    elif len(name_parts) >= 2 and name_parts[1].isdigit():
+        source_label = name_parts[0]
+        skeleton_stem = name_parts[1]
+        trial_id = f"{source_label}_{skeleton_stem}"
+    else:
+        source_label = ""
+        skeleton_stem = trial_dir.name.split("_", 1)[0]
+        trial_id = skeleton_stem
     skel_dir = trial_dir / "skelton"
-    tsv_path = skel_dir / f"{trial_id}.tsv"
+    tsv_path = skel_dir / f"{skeleton_stem}.tsv"
     csv_path = skel_dir / "Theia_Sub0.csv"
     meta = read_skeleton_meta(tsv_path)
 
@@ -97,6 +109,7 @@ def read_skeleton_trial(trial_dir):
     )
     return {
         "trial_id": trial_id,
+        "source_label": source_label,
         "frames": frames,
         "times": frame_times,
         "y": y_abs[:, keep_cols],

@@ -1,0 +1,102 @@
+{
+  "Ridge": {
+    "rw_005": {
+      "model": "Ridge",
+      "trial": "rw_005",
+      "rows": 6763,
+      "rmse_mm": 1241.7930147655184,
+      "mae_mm": 903.5833021519076,
+      "mean_joint_error_mm": 2027.869912746694,
+      "p95_mean_joint_error_mm": 3082.5172638858303
+    },
+    "sit_008": {
+      "model": "Ridge",
+      "trial": "sit_008",
+      "rows": 7075,
+      "rmse_mm": 1004.2416483264183,
+      "mae_mm": 741.8994706972885,
+      "mean_joint_error_mm": 1606.9975736055478,
+      "p95_mean_joint_error_mm": 2581.3465274759155
+    }
+  },
+  "TCN_2s": {
+    "rw_005": {
+      "model": "TCN_2s",
+      "trial": "rw_005",
+      "rows": 6713,
+      "rmse_mm": 295.8046120176705,
+      "mae_mm": 160.1119878097773,
+      "mean_joint_error_mm": 366.67266182208226,
+      "p95_mean_joint_error_mm": 1120.5566543613952
+    },
+    "sit_008": {
+      "model": "TCN_2s",
+      "trial": "sit_008",
+      "rows": 7025,
+      "rmse_mm": 344.8701872674554,
+      "mae_mm": 205.770944745895,
+      "mean_joint_error_mm": 467.8561629064955,
+      "p95_mean_joint_error_mm": 1186.42643888745
+    }
+  },
+  "TCN_4s": {
+    "rw_005": {
+      "model": "TCN_4s",
+      "trial": "rw_005",
+      "rows": 6663,
+      "rmse_mm": 290.076787870635,
+      "mae_mm": 157.69242476309074,
+      "mean_joint_error_mm": 361.1734476437451,
+      "p95_mean_joint_error_mm": 1090.8533206771715
+    },
+    "sit_008": {
+      "model": "TCN_4s",
+      "trial": "sit_008",
+      "rows": 6975,
+      "rmse_mm": 343.38271263405005,
+      "mae_mm": 206.0513189219317,
+      "mean_joint_error_mm": 466.70611291337667,
+      "p95_mean_joint_error_mm": 1231.347421076452
+    }
+  },
+  "ConvTransformer_2s": {
+    "rw_005": {
+      "model": "ConvTransformer_2s",
+      "trial": "rw_005",
+      "rows": 6713,
+      "rmse_mm": 308.04835599345773,
+      "mae_mm": 162.73680226398636,
+      "mean_joint_error_mm": 373.55198865230625,
+      "p95_mean_joint_error_mm": 1182.4250176426035
+    },
+    "sit_008": {
+      "model": "ConvTransformer_2s",
+      "trial": "sit_008",
+      "rows": 7025,
+      "rmse_mm": 343.61805024373734,
+      "mae_mm": 210.0672606262771,
+      "mean_joint_error_mm": 479.3537022724121,
+      "p95_mean_joint_error_mm": 1186.3846529454977
+    }
+  },
+  "Ensemble_TCN2_TCN4_Conv2": {
+    "rw_005": {
+      "model": "Ensemble_TCN2_TCN4_Conv2",
+      "trial": "rw_005",
+      "rows": 6663,
+      "rmse_mm": 280.49482149481776,
+      "mae_mm": 148.1858677548652,
+      "mean_joint_error_mm": 338.93575925083985,
+      "p95_mean_joint_error_mm": 1081.3844446934004
+    },
+    "sit_008": {
+      "model": "Ensemble_TCN2_TCN4_Conv2",
+      "trial": "sit_008",
+      "rows": 6975,
+      "rmse_mm": 320.03508243258096,
+      "mae_mm": 193.10240041205307,
+      "mean_joint_error_mm": 438.1979804281234,
+      "p95_mean_joint_error_mm": 1119.0752802313045
+    }
+  }
+}

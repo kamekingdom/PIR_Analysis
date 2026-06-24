@@ -27,6 +27,8 @@ def load_row(name, model_dir):
         "context_sec": model.get("context_sec", ""),
         "seq_len": model.get("seq_len", ""),
         "members": "+".join(member["name"] for member in members),
+        "train_trials": metrics.get("train_trials", []),
+        "test_trials": metrics.get("test_trials", []),
         "test_rows": samples.get("test_rows", ""),
         "rmse_mm": float(test["rmse_mm"]),
         "mae_mm": float(test["mae_mm"]),
@@ -44,6 +46,8 @@ def write_csv(path, rows):
         "context_sec",
         "seq_len",
         "members",
+        "train_trials",
+        "test_trials",
         "test_rows",
         "rmse_mm",
         "mae_mm",
@@ -58,12 +62,32 @@ def write_csv(path, rows):
         for rank, row in enumerate(rows, start=1):
             out = dict(row)
             out["rank"] = rank
+            out["train_trials"] = "+".join(out.get("train_trials", []))
+            out["test_trials"] = "+".join(out.get("test_trials", []))
             writer.writerow(out)
 
 
 def write_report(path, rows):
     best = rows[0]
     baseline = next((row for row in rows if row["name"].lower() == "ridge"), None)
+    reference = baseline or best
+    train_trials = ", ".join(f"trial {trial}" for trial in reference.get("train_trials", []))
+    test_trials = ", ".join(f"trial {trial}" for trial in reference.get("test_trials", []))
+    if not train_trials:
+        train_trials = "metrics.jsonに記録された学習trial"
+    if not test_trials:
+        test_trials = "metrics.jsonに記録された未使用テストtrial"
+    test_trial_count = len(reference.get("test_trials", []))
+    if test_trial_count > 1:
+        limitation_text = (
+            f"この比較は{test_trial_count}本の未使用テストtrialに基づく。"
+            "論文として強い主張を行うには、trial単位の交差検証と、別日・別条件での追加収録が必要である。"
+        )
+    else:
+        limitation_text = (
+            "この比較は単一の未使用テストtrialに基づく。"
+            "論文として強い主張を行うには、trial単位の交差検証と、別日・別条件での追加収録が必要である。"
+        )
     type_labels = {
         "prediction_average_ensemble": "予測平均アンサンブル",
         "ridge_regression": "Ridge回帰",
@@ -80,7 +104,7 @@ def write_report(path, rows):
         "",
         "- 入力: 5台のPIRモジュールから作成した25Hz整列済みPIR特徴量。",
         "- 教師: Theia3Dのglobal joint座標。19関節のXYZ、合計57次元を予測対象とした。",
-        "- 分割: trial 002, 003, 004を学習に使用し、trial 005を未使用テストに使用した。",
+        f"- 分割: {train_trials}を学習に使用し、{test_trials}を未使用テストに使用した。",
         "- 評価指標: 全XYZ座標のRMSE/MAE、フレームごとの平均関節誤差、その95パーセンタイル、global R2。",
         "",
         "## 概要",
@@ -114,13 +138,12 @@ def write_report(path, rows):
             "## 解釈",
             "",
             "- 単体モデルではTCN系が最も強く、PIR信号には局所的な時間畳み込みがよく合っていると考えられる。",
-            "- GRUは文脈長を6秒へ伸ばすと改善したが、フレーム平均関節誤差では最良TCNより大きかった。",
-            "- Transformer単体やConvTransformerは、現状の4 trial規模では過学習しやすい傾向があった。",
-            "- 最良結果は、TCNとGRUの予測を平均することで得られた。誤差傾向の違いが相補的に働いた可能性がある。",
+            "- RNN系、MLP系、Transformer系も一定の性能を示したが、最良単体モデルには届かなかった。",
+            "- 最良結果は、上位モデルの予測を平均することで得られた。誤差傾向の違いが相補的に働いた可能性がある。",
             "",
             "## 注意点",
             "",
-            "この比較は単一の未使用テストtrialに基づく。論文として強い主張を行うには、trial単位の交差検証と、別日・別条件での追加収録が必要である。",
+            limitation_text,
         ]
     )
     Path(path).write_text("\n".join(lines), encoding="utf-8")

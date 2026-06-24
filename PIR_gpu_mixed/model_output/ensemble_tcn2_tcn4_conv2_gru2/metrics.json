@@ -1,0 +1,173 @@
+{
+  "type": "prediction_average_ensemble",
+  "members": [
+    {
+      "name": "tcn2",
+      "input": "PIR_gpu_mixed/model_output/sequence_tcn2s_gpu/test_predictions.csv",
+      "weight": 0.25
+    },
+    {
+      "name": "tcn4",
+      "input": "PIR_gpu_mixed/model_output/sequence_tcn4s_gpu/test_predictions.csv",
+      "weight": 0.25
+    },
+    {
+      "name": "conv2",
+      "input": "PIR_gpu_mixed/model_output/sequence_convtransformer2s_gpu/test_predictions.csv",
+      "weight": 0.25
+    },
+    {
+      "name": "gru2",
+      "input": "PIR_gpu_mixed/model_output/sequence_gru2s_gpu/test_predictions.csv",
+      "weight": 0.25
+    }
+  ],
+  "samples": {
+    "test_rows": 13638
+  },
+  "target_count": 57,
+  "target_names": [
+    "abdomen_X [mm]",
+    "abdomen_Y [mm]",
+    "abdomen_Z [mm]",
+    "head_X [mm]",
+    "head_Y [mm]",
+    "head_Z [mm]",
+    "l_foot_X [mm]",
+    "l_foot_Y [mm]",
+    "l_foot_Z [mm]",
+    "l_hand_X [mm]",
+    "l_hand_Y [mm]",
+    "l_hand_Z [mm]",
+    "l_larm_X [mm]",
+    "l_larm_Y [mm]",
+    "l_larm_Z [mm]",
+    "l_shank_X [mm]",
+    "l_shank_Y [mm]",
+    "l_shank_Z [mm]",
+    "l_thigh_X [mm]",
+    "l_thigh_Y [mm]",
+    "l_thigh_Z [mm]",
+    "l_toes_X [mm]",
+    "l_toes_Y [mm]",
+    "l_toes_Z [mm]",
+    "l_uarm_X [mm]",
+    "l_uarm_Y [mm]",
+    "l_uarm_Z [mm]",
+    "neck_X [mm]",
+    "neck_Y [mm]",
+    "neck_Z [mm]",
+    "pelvis_X [mm]",
+    "pelvis_Y [mm]",
+    "pelvis_Z [mm]",
+    "r_foot_X [mm]",
+    "r_foot_Y [mm]",
+    "r_foot_Z [mm]",
+    "r_hand_X [mm]",
+    "r_hand_Y [mm]",
+    "r_hand_Z [mm]",
+    "r_larm_X [mm]",
+    "r_larm_Y [mm]",
+    "r_larm_Z [mm]",
+    "r_shank_X [mm]",
+    "r_shank_Y [mm]",
+    "r_shank_Z [mm]",
+    "r_thigh_X [mm]",
+    "r_thigh_Y [mm]",
+    "r_thigh_Z [mm]",
+    "r_toes_X [mm]",
+    "r_toes_Y [mm]",
+    "r_toes_Z [mm]",
+    "r_uarm_X [mm]",
+    "r_uarm_Y [mm]",
+    "r_uarm_Z [mm]",
+    "thorax_X [mm]",
+    "thorax_Y [mm]",
+    "thorax_Z [mm]"
+  ],
+  "test": {
+    "rmse_mm": 304.6106573471802,
+    "mae_mm": 173.43969071239093,
+    "mean_joint_error_mm": 396.0744440289495,
+    "p95_mean_joint_error_mm": 1122.8873483042296,
+    "r2_global": 0.9280549631696063
+  },
+  "joint_test_rmse": [
+    {
+      "joint": "abdomen",
+      "position_rmse_mm": 509.10174429575926
+    },
+    {
+      "joint": "head",
+      "position_rmse_mm": 513.8681836702426
+    },
+    {
+      "joint": "l_foot",
+      "position_rmse_mm": 528.0201982975924
+    },
+    {
+      "joint": "l_hand",
+      "position_rmse_mm": 563.3102657905815
+    },
+    {
+      "joint": "l_larm",
+      "position_rmse_mm": 537.8439460373182
+    },
+    {
+      "joint": "l_shank",
+      "position_rmse_mm": 533.8880872992895
+    },
+    {
+      "joint": "l_thigh",
+      "position_rmse_mm": 519.5784790248781
+    },
+    {
+      "joint": "l_toes",
+      "position_rmse_mm": 555.0330685568422
+    },
+    {
+      "joint": "l_uarm",
+      "position_rmse_mm": 527.3610355815638
+    },
+    {
+      "joint": "neck",
+      "position_rmse_mm": 515.4817272694426
+    },
+    {
+      "joint": "pelvis",
+      "position_rmse_mm": 508.14920402481306
+    },
+    {
+      "joint": "r_foot",
+      "position_rmse_mm": 528.5152086129449
+    },
+    {
+      "joint": "r_hand",
+      "position_rmse_mm": 543.9618475119695
+    },
+    {
+      "joint": "r_larm",
+      "position_rmse_mm": 519.325289831393
+    },
+    {
+      "joint": "r_shank",
+      "position_rmse_mm": 527.125278290597
+    },
+    {
+      "joint": "r_thigh",
+      "position_rmse_mm": 509.89141838434676
+    },
+    {
+      "joint": "r_toes",
+      "position_rmse_mm": 555.1509145279919
+    },
+    {
+      "joint": "r_uarm",
+      "position_rmse_mm": 509.1073478140958
+    },
+    {
+      "joint": "thorax",
+      "position_rmse_mm": 514.771603936059
+    }
+  ]
+}
