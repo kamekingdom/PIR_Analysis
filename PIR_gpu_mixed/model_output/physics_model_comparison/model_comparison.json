@@ -1,0 +1,258 @@
+[
+  {
+    "name": "Weighted_TCN2_TCN4_Conv2_Bone",
+    "dir": "PIR_gpu_mixed/model_output/physics_ensemble_weighted_tcn2_tcn4_conv2_bone",
+    "type": "prediction_average_ensemble",
+    "context_sec": "",
+    "seq_len": "",
+    "members": "tcn2+tcn4+conv2+bone",
+    "train_trials": [],
+    "test_trials": [],
+    "test_rows": 13638,
+    "rmse_mm": 300.4874699995067,
+    "mae_mm": 170.57738967918613,
+    "mean_joint_error_mm": 388.18463658426606,
+    "p95_mean_joint_error_mm": 1112.0798038433943,
+    "r2_global": 0.9299894667106139
+  },
+  {
+    "name": "Ensemble_TCN2_TCN4_Conv2",
+    "dir": "PIR_gpu_mixed/model_output/ensemble_tcn2_tcn4_conv2",
+    "type": "prediction_average_ensemble",
+    "context_sec": "",
+    "seq_len": "",
+    "members": "tcn2+tcn4+conv2",
+    "train_trials": [],
+    "test_trials": [],
+    "test_rows": 13638,
+    "rmse_mm": 301.3660745527403,
+    "mae_mm": 171.15791756290042,
+    "mean_joint_error_mm": 389.70229339878705,
+    "p95_mean_joint_error_mm": 1110.3776680849278,
+    "r2_global": 0.9295794562625057
+  },
+  {
+    "name": "TCN_4s",
+    "dir": "PIR_gpu_mixed/model_output/sequence_tcn4s_gpu",
+    "type": "tcn",
+    "context_sec": 4.0,
+    "seq_len": 101,
+    "members": "",
+    "train_trials": [
+      "rw_002",
+      "rw_003",
+      "rw_004",
+      "sit_003",
+      "sit_004",
+      "sit_005",
+      "sit_006",
+      "sit_007"
+    ],
+    "test_trials": [
+      "rw_005",
+      "sit_008"
+    ],
+    "test_rows": 13638,
+    "rmse_mm": 318.4562072753906,
+    "mae_mm": 182.42501831054688,
+    "mean_joint_error_mm": 415.1469421386719,
+    "p95_mean_joint_error_mm": 1178.1888427734375,
+    "r2_global": 0.9213660520965765
+  },
+  {
+    "name": "TCN_2s",
+    "dir": "PIR_gpu_mixed/model_output/sequence_tcn2s_gpu",
+    "type": "tcn",
+    "context_sec": 2.0,
+    "seq_len": 51,
+    "members": "",
+    "train_trials": [
+      "rw_002",
+      "rw_003",
+      "rw_004",
+      "sit_003",
+      "sit_004",
+      "sit_005",
+      "sit_006",
+      "sit_007"
+    ],
+    "test_trials": [
+      "rw_005",
+      "sit_008"
+    ],
+    "test_rows": 13738,
+    "rmse_mm": 321.8304748535156,
+    "mae_mm": 183.45994567871094,
+    "mean_joint_error_mm": 418.41339111328125,
+    "p95_mean_joint_error_mm": 1164.212158203125,
+    "r2_global": 0.9198144670002907
+  },
+  {
+    "name": "ConvTransformer_2s",
+    "dir": "PIR_gpu_mixed/model_output/sequence_convtransformer2s_gpu",
+    "type": "convtransformer",
+    "context_sec": 2.0,
+    "seq_len": 51,
+    "members": "",
+    "train_trials": [
+      "rw_002",
+      "rw_003",
+      "rw_004",
+      "sit_003",
+      "sit_004",
+      "sit_005",
+      "sit_006",
+      "sit_007"
+    ],
+    "test_trials": [
+      "rw_005",
+      "sit_008"
+    ],
+    "test_rows": 13738,
+    "rmse_mm": 326.7212829589844,
+    "mae_mm": 186.93948364257812,
+    "mean_joint_error_mm": 427.65423583984375,
+    "p95_mean_joint_error_mm": 1184.8443603515625,
+    "r2_global": 0.917358823628887
+  },
+  {
+    "name": "RawBoneTCN_4s",
+    "dir": "PIR_gpu_mixed/model_output/physics_raw_bone_tcn4s",
+    "type": "raw_bone_tcn",
+    "context_sec": 4.0,
+    "seq_len": 101,
+    "members": "",
+    "train_trials": [
+      "rw_002",
+      "rw_003",
+      "rw_004",
+      "sit_003",
+      "sit_004",
+      "sit_005",
+      "sit_006",
+      "sit_007"
+    ],
+    "test_trials": [
+      "rw_005",
+      "sit_008"
+    ],
+    "test_rows": 13638,
+    "rmse_mm": 331.7013244628906,
+    "mae_mm": 190.89125061035156,
+    "mean_joint_error_mm": 434.3240661621094,
+    "p95_mean_joint_error_mm": 1222.6781005859375,
+    "r2_global": 0.9146889912682112
+  },
+  {
+    "name": "RootLocalTCN_4s",
+    "dir": "PIR_gpu_mixed/model_output/physics_rootlocal_tcn4s",
+    "type": "rootlocal_tcn",
+    "context_sec": 4.0,
+    "seq_len": 101,
+    "members": "",
+    "train_trials": [
+      "rw_002",
+      "rw_003",
+      "rw_004",
+      "sit_003",
+      "sit_004",
+      "sit_005",
+      "sit_006",
+      "sit_007"
+    ],
+    "test_trials": [
+      "rw_005",
+      "sit_008"
+    ],
+    "test_rows": 13638,
+    "rmse_mm": 338.2266540527344,
+    "mae_mm": 189.81198120117188,
+    "mean_joint_error_mm": 433.2247314453125,
+    "p95_mean_joint_error_mm": 1249.908447265625,
+    "r2_global": 0.9112994493205685
+  },
+  {
+    "name": "HybridStructTCN_4s",
+    "dir": "PIR_gpu_mixed/model_output/physics_hybrid_struct_tcn4s",
+    "type": "hybrid_struct_tcn",
+    "context_sec": 4.0,
+    "seq_len": 101,
+    "members": "",
+    "train_trials": [
+      "rw_002",
+      "rw_003",
+      "rw_004",
+      "sit_003",
+      "sit_004",
+      "sit_005",
+      "sit_006",
+      "sit_007"
+    ],
+    "test_trials": [
+      "rw_005",
+      "sit_008"
+    ],
+    "test_rows": 13638,
+    "rmse_mm": 351.17596435546875,
+    "mae_mm": 206.7768096923828,
+    "mean_joint_error_mm": 476.5108947753906,
+    "p95_mean_joint_error_mm": 1248.051513671875,
+    "r2_global": 0.9043774710320185
+  },
+  {
+    "name": "StructTCN_4s",
+    "dir": "PIR_gpu_mixed/model_output/physics_struct_tcn4s",
+    "type": "struct_tcn",
+    "context_sec": 4.0,
+    "seq_len": 101,
+    "members": "",
+    "train_trials": [
+      "rw_002",
+      "rw_003",
+      "rw_004",
+      "sit_003",
+      "sit_004",
+      "sit_005",
+      "sit_006",
+      "sit_007"
+    ],
+    "test_trials": [
+      "rw_005",
+      "sit_008"
+    ],
+    "test_rows": 13638,
+    "rmse_mm": 352.34417724609375,
+    "mae_mm": 198.44947814941406,
+    "mean_joint_error_mm": 456.5538330078125,
+    "p95_mean_joint_error_mm": 1301.004638671875,
+    "r2_global": 0.9037402149861181
+  },
+  {
+    "name": "Ridge",
+    "dir": "PIR_gpu_mixed/model_output/baseline_ridge",
+    "type": "ridge_regression",
+    "context_sec": "",
+    "seq_len": "",
+    "members": "",
+    "train_trials": [
+      "rw_002",
+      "rw_003",
+      "rw_004",
+      "sit_003",
+      "sit_004",
+      "sit_005",
+      "sit_006",
+      "sit_007"
+    ],
+    "test_trials": [
+      "rw_005",
+      "sit_008"
+    ],
+    "test_rows": 13838,
+    "rmse_mm": 1126.6147227556744,
+    "mae_mm": 820.9186752159342,
+    "mean_joint_error_mm": 1812.6891207654207,
+    "p95_mean_joint_error_mm": 2865.1956246037525,
+    "r2_global": 0.014567380021284548
+  }
+]

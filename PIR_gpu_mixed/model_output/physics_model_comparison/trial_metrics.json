@@ -1,0 +1,82 @@
+{
+  "PreviousBest_Ensemble_TCN2_TCN4_Conv2": {
+    "rw_005": {
+      "model": "PreviousBest_Ensemble_TCN2_TCN4_Conv2",
+      "trial": "rw_005",
+      "rows": 6663,
+      "rmse_mm": 280.49482149481776,
+      "mae_mm": 148.1858677548652,
+      "mean_joint_error_mm": 338.93575925083985,
+      "p95_mean_joint_error_mm": 1081.3844446934004
+    },
+    "sit_008": {
+      "model": "PreviousBest_Ensemble_TCN2_TCN4_Conv2",
+      "trial": "sit_008",
+      "rows": 6975,
+      "rmse_mm": 320.03508243258096,
+      "mae_mm": 193.10240041205307,
+      "mean_joint_error_mm": 438.1979804281234,
+      "p95_mean_joint_error_mm": 1119.0752802313045
+    }
+  },
+  "Weighted_TCN2_TCN4_Conv2_Bone": {
+    "rw_005": {
+      "model": "Weighted_TCN2_TCN4_Conv2_Bone",
+      "trial": "rw_005",
+      "rows": 6663,
+      "rmse_mm": 279.67322305042023,
+      "mae_mm": 147.60760447954794,
+      "mean_joint_error_mm": 337.48603359030346,
+      "p95_mean_joint_error_mm": 1087.183659268167
+    },
+    "sit_008": {
+      "model": "Weighted_TCN2_TCN4_Conv2_Bone",
+      "trial": "sit_008",
+      "rows": 6975,
+      "rmse_mm": 319.10526685568857,
+      "mae_mm": 192.51970921737535,
+      "mean_joint_error_mm": 436.61543109638944,
+      "p95_mean_joint_error_mm": 1121.8070794524092
+    }
+  },
+  "RawBoneTCN_4s": {
+    "rw_005": {
+      "model": "RawBoneTCN_4s",
+      "trial": "rw_005",
+      "rows": 6663,
+      "rmse_mm": 304.43106660428356,
+      "mae_mm": 164.45759464314582,
+      "mean_joint_error_mm": 377.1043143191804,
+      "p95_mean_joint_error_mm": 1183.8817193830844
+    },
+    "sit_008": {
+      "model": "RawBoneTCN_4s",
+      "trial": "sit_008",
+      "rows": 6975,
+      "rmse_mm": 355.8051390719399,
+      "mae_mm": 216.1425199133421,
+      "mean_joint_error_mm": 488.98429900761465,
+      "p95_mean_joint_error_mm": 1260.1670909297345
+    }
+  },
+  "RootLocalTCN_4s": {
+    "rw_005": {
+      "model": "RootLocalTCN_4s",
+      "trial": "rw_005",
+      "rows": 6663,
+      "rmse_mm": 313.16071745928036,
+      "mae_mm": 163.11473165744314,
+      "mean_joint_error_mm": 371.622815828321,
+      "p95_mean_joint_error_mm": 1234.5661298855462
+    },
+    "sit_008": {
+      "model": "RootLocalTCN_4s",
+      "trial": "sit_008",
+      "rows": 6975,
+      "rmse_mm": 360.547581609402,
+      "mae_mm": 215.31502997255862,
+      "mean_joint_error_mm": 492.0711748175502,
+      "p95_mean_joint_error_mm": 1268.2346113459826
+    }
+  }
+}
